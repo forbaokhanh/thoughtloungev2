@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Lounge Log 
+{% endblock %}
+
+{% block content %}
+
+<script>
+    var logLoungeHref = '{{ lounge_href }}';
+</script>
+<div class="jumbotron">
+    <h2>Previous Thought Lounges</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div id="logLoungeError">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <script id="logLoungesTemplate" type="x-tmpl-mustache">
+                {% raw %}
+                    {{#items}}
+                            <a class="list-group-item logLounge" id="{{ href }}" href="#" >
+                                <strong>
+                                    {{ topic }} 
+                                </strong>
+                                <br>
+                                <small>
+                                    {{ dateTime }}
+                                </small>
+                            </a>
+                    {{/items}}
+                    {{^items}}
+                        <a class="list-group-item lounge" href="#"> 
+                            <strong>
+                                Nothing here yet.
+                            </strong>
+                        </a>
+                    {{/items}}
+                {% endraw %}
+            </script>
+            <div id="logLounges" class="nav nav-pills nav-stacked lounge-sidebar">
+            </div>
+        </div>
+            <div class="col-md-9">
+                <script id ="logLoungeInfoTemplate" type="x-tmpl-mustache">
+                    {% raw %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title"> {{ topic }} </h1>
+                                <small> Hosted by {{ host.firstName }}</small>
+                            </div>
+                            <div class="panel-body">
+                                <h5>{{ summary }}</h5>
+                                {{#pictures.items}}
+                                    <img class="" height="200" src="{{ picture.image }}">
+                                {{/pictures.items}}
+
+                                {{#loungeUsers.items}}
+                                <div class="userHeader">
+                                    <br>
+                                    <h4>{{ user.firstName }}: {{ topic}}</h4>
+                                </div>
+                                <div class="userBody">
+                                    <h5>
+                                        {{#summary}}
+                                            {{.}} <br>
+                                        {{/summary}}
+                                    </h5>
+                                </div>
+                                {{/loungeUsers.items}}
+                            </div>
+                        </div>
+                    {% endraw %}
+                </script>
+                <div id="logLoungeInfo">
+                </div>
+            </div>
+    </div>
+</div>
+{% endblock%}
+
+{% block js %}
+<script src="{{ url_for('static', filename = 'js/log.js') }}"></script>
+{% endblock %}

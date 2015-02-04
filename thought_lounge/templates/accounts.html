@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script id="accounts-template" type="x-tmpl-mustache">
+{% raw %}
+{{#items}}
+    <li class="list-group-item" data-user-href="{{ href }}">
+        <strong>
+            {{ firstName }} {{ lastName }}
+        </strong>
+        <small>
+            {{ role }}
+        </small>
+        <div class="btn-group btn-group-sm pull-right">
+            <button type="button" class="btn btn-success admin-btn">
+                Make Admin 
+            </button>
+            <button type="button" class="btn btn-primary host-btn">
+                Make Host 
+            </button>
+            <button type="button" class="btn btn-default lounger-btn">
+                Make Lounger 
+            </button>
+        </div>
+    </li>
+{{/items}}
+{{^items.length}}
+    <li class="list-group-item" href="#">
+        <strong>
+            Nothing here yet.
+        </strong>
+    </li>
+{{/items.length}}
+{% endraw %}
+</script>
+<div class="container top-buffer bottom-buffer">
+    <div class="row"> 
+        <div class="col-sm-offset-2 col-sm-8">
+            <div id="accounts-error"></div>
+            <ul id="accounts" class="list-group"></ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename = 'js/accounts.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+Recommendations:
+    -SSL everywhere
+    -256 MB of memory for the VPS
+    -Daily offsite backups on the database
+    -Rigorously test automated emails
+    -Move the log lounge modal to a separate page
+    -HostApplications function as a single resource effectively, since all those that are denied or approved are deeleted. May want to turn it into a real scalar resource (look at the implementation for Keys for an example)
+    -If rewriting the front-end, implement Backbone.js (Backbone.sync)
+    -Add a way for users to change their password and delete their account
+    -Allow users to unsubscribe with a link in the footer of emails
+    -Email admins when a 500 error occurs
+    -Validate query params for GET requests
+    -Instead of time=past for lounge log, mini lounge log, add a 'logged' trigger in the backend that looks for topic and summary in each user lounge iff showed up.
+        -Could be a database @property method as well.
+    -UserLounge/LoungeUser permissions should be made consistent with either user permissions or lounge permissions
+    -SPF Validation

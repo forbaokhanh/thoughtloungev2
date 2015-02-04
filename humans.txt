@@ -1,0 +1,19 @@
+/* TEAM */
+API and backend developer: Balachandar 'Raj' Kesavan
+www.rajk.me / raj.ksvn@gmail.com
+Berkeley, California 
+
+Frontend developer: Genevieve Tran 
+Berkeley, California 
+
+Oversight: Abhinav Vadrevu 
+Berkeley, California 
+
+/* THANKS */
+[inspiration for web design] Joodo: http://www.joodoweb.com/
+[Marshmallow debugging] Steven Loria: https://github.com/sloria/
+
+/* SITE */
+URL: http://www.thoughtlounge.org/
+Code: https://github.com/raj-kesavan/thought-lounge
+Technology: Flask, Python 3.4, sqlite, SQLAlchemy, Marshmallow, Flask-RESTful, passlib, nosetests, requests, HTML5, CSS3, JavaScript, Moment.js, Mustache.js 

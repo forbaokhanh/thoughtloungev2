@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="jumbotron" id="header">
+             <h1>Welcome, Axel!</h1>
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="pic" class="col-md-3">
+                    <a href="#"><img src="{{ url_for('static', filename = 'img/icon.png') }}" class="img-rounded" alt="pic"></a>
+                    <div id="num" class="panel panel-default" align="center">
+                         <h6>You've attended <code>&lt;5&gt;</code> Thought Lounges</h6>
+                    </div>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">Manage Events</a>
+                        <a href="#" class="list-group-item">Manage Users</a>
+                    </div>
+                    <div id="addtl">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtlmodal"> Host a Thought Lounge</button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="addtlmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                     <h4 class="modal-title" id="myModalLabel">Add a Thought Lounge</h4>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div id="date">
+                                                            <label>Date</label>
+                                                            <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+                                                                <input class="span2" size="16" type="text" value="12-02-2012"> <span class="add-on"><i class="icon-th"></i></span>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Location</label>
+                                                            <textarea class="form-control" rows="1"></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Attendees</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="Add Attendees" aria-describedby="basic-addon2"> <span class="input-group-addon" id="basic-addon2">
+                                                      <a href="#"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                                </a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                <input type="checkbox">I have read booked the location</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <p>Please log your Thought Lounges</p>
+                     <h2>About Your Awesome Self</h2>
+
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="input-medium" id="bioinput">
+                            <textarea class="form-control" rows="8"></textarea>
+                            <div class="col-md-6">
+                                <div id="calendar" class="panel panel-default">
+                                    <div class="panel-heading">
+                                         <h3 class="panel-title">Upcoming TL's</h3>
+
+                                    </div>
+                                    <div class="panel-body">
+                                        <!-- Some example of a pevious TL -->
+                                        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#logtlmodal">Random upcoming TL</button>
+                                    </div>
+                                     <!-- Modal -->
+                                    <div class="modal fade" id="logtlmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                     <h4 class="modal-title" id="myModalLabel">Random previous TL</h4>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-2" id="attendees">
+                                                                <div class="panel panel-default">
+                                                                  <div class="panel-heading">
+                                                                    <h3 class="panel-title">Attendees</h3>
+                                                                  </div>
+                                                                  <div class="panel-body">
+                                                                    <ul class="nav nav-pills nav-stacked">
+                                                                        <li class="active"><a href="#">Lounger 1</a></li>
+                                                                        <li><a href="#">Lounger 2</a></li>
+                                                                        <li><a href="#">Lounger 3</a></li>
+                                                                    </ul>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <form>
+                                                                    <div class="form--group">
+                                                                        <label>Topic</label>
+                                                                        <textarea class="form-control" rows="1"></textarea>
+                                                                    </div>
+                                                                    <div class="form--group">
+                                                                        <label>Summary</label>
+                                                                        <textarea class="form-control" rows="4"></textarea>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input type="checkbox">Did not show up</label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="calendar" class="panel panel-default">
+                                    <div class="panel-heading">
+                                         <h3 class="panel-title">Previous TL's</h3>
+
+                                    </div>
+                                    <div class="panel-body">
+                                        <!-- Some example of a pevious TL -->
+                                        <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#logtlmodal">Random previous TL</button>
+                                    </div>
+                                     <!-- Modal -->
+                                    <div class="modal fade" id="logtlmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                     <h4 class="modal-title" id="myModalLabel">Random previous TL</h4>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-2" id="attendees">
+                                                                <div class="panel panel-default">
+                                                                  <div class="panel-heading">
+                                                                    <h3 class="panel-title">Attendees</h3>
+                                                                  </div>
+                                                                  <div class="panel-body">
+                                                                    <ul class="nav nav-pills nav-stacked">
+                                                                        <li class="active"><a href="#">Lounger 1</a></li>
+                                                                        <li><a href="#">Lounger 2</a></li>
+                                                                        <li><a href="#">Lounger 3</a></li>
+                                                                    </ul>
+                                                                  </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <form>
+                                                                    <div class="form--group">
+                                                                        <label>Topic</label>
+                                                                        <textarea class="form-control" rows="1"></textarea>
+                                                                    </div>
+                                                                    <div class="form--group">
+                                                                        <label>Summary</label>
+                                                                        <textarea class="form-control" rows="4"></textarea>
+                                                                    </div>
+                                                                    <div class="checkbox">
+                                                                        <label><input type="checkbox">Did not show up</label>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Next</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

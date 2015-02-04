@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Previous Thought Lounge Events</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+          <h4 class="subtitle"> 
+                List of Events
+          </h4>
+          <script id="prevloungesTemplate" type="x-tmpl-mustache">
+            {% raw %}
+            {{#items}}
+                <li role="presentation" class="list-group-item"><a class="list-group-item">
+                    <strong>
+                        {{ dateTime }} 
+                    </strong>
+                    <small>
+                        hosted by {{ host.firstName }}
+                    </small>
+                </a></li>
+            {{/items}}
+            {% endraw %}
+            </script>
+            <ul id="prevlounges" class="nav nav-pills nav-stacked">
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock%}
+
+{% block js %}
+<script src="{{ url_for('static', filename = 'js/log.js') }}"></script>
+{% endblock %}

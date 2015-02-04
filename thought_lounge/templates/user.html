@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+       
+{% block title %}
+    {{ g.user.first_name }} {{ g.user.last_name or '' }}
+{% endblock %}
+
+{% block content %}
+<script>
+    <!-- For host preview -->
+    var hostHref = "{{ hostHref or ''}}";
+</script>
+
+<div class="container top-buffer">
+    <div class="row"> 
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+            {% block welcome_message %}
+            <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
+            {% raw %}
+                <h2>
+                    Welcome,
+                    <span class="header-primary">{{ firstName }}</span>. 
+                    You have attended <span class="header-primary">{{ userLounges.items.length }}</span> {{ loungePlurality }} so far.
+                </h2>
+            {% endraw %}
+            </script>
+            {% endblock %}
+            <div id="welcomeMessage"></div>
+        </div>
+    </div>
+</div>
+<div class="container top-buffer">
+    <div class="row">
+        <div class="col-sm-2">
+            <script id="upload-picture-template" type="x-tmpl-mustache">
+            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="100%" style="z-index:-1">
+            <br><br>
+            {% raw %}
+            <form id="upload-picture-form" enctype="multipart/form-data">
+                <input id="upload-picture-file" type="file" name="file" class="btn-block">
+            </form>
+            {% endraw %}
+            </script>
+
+            <script id="picture-template" type="x-tmpl-mustache">
+            {% raw %}
+            <img class="img-responsive image-center" src="{{ image }}">
+            {% endraw %}
+            </script>
+            
+            <script id="delete-picture-template" type="x-tmpl-mustache">
+            {% raw %}
+            <br>
+            <form id="delete-picture-form">
+                <button type="submit" class="btn btn-danger btn-sm btn-block">
+                    Delete this picture
+                </button>
+            </form>
+            {% endraw %}
+            </script>
+
+            <div id="picture-error"></div>
+            <div id="picture"></div>
+            {% block picture_control %}
+            <div id="upload-picture"></div>
+            <div id="delete-picture"></div>
+            {% endblock %}
+
+            {% block becomehost %}
+            <button type="button" class="btn btn-primary btn-sm btn-block top-buffer" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
+                Become a host
+            </button>
+            {% endblock %}
+            {% block account %} 
+            <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer" data-toggle="modal" data-target="#account-modal">
+                <i class="fa fa-cog fa-fw"></i>
+                Account
+            </button>
+            {% endblock %}
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-subtitle">
+                {% block your_upcoming_lounges %}
+                Your
+                {% endblock %}
+                Upcoming Lounges
+                {% block register_lounge %}
+                <small>
+                    <a href="/#register-lounge">register for a lounge</a>
+                </small>
+                {% endblock %}
+            </h3>
+            <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
+                {% raw %}
+                {{#items}}
+                    <div class="list-group-item"> 
+                        <strong>
+                            <small>
+                                {{ lounge.dateTime }} 
+                                at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                            </small>
+                        </strong>
+                    </div>
+                {{/items}}
+                {{^items.length}}
+                    <div class="list-group-item">
+                        <strong>
+                            Nothing here yet.
+                        </strong>
+                    </div>
+                {{/items.length}}
+                {% endraw %}
+            </script>
+            <div id="upcomingUserLounges"> </div>
+            <h3 class="text-subtitle"> 
+                {% block your_previous_lounges %}
+                Your
+                {% endblock %}
+                Previous Lounges
+                <br>
+                <small>(click a lounge to view its log)</small>
+            </h3>
+            <script id="userLoungesTemplate" type="x-tmpl-mustache">
+            {% raw %}
+            {{#items}}
+                <a class="list-group-item" href="{{ lounge.web.href }}">
+                    <strong>
+                        <small>
+                            {{ lounge.dateTime }}
+                        </small>
+                    </strong>
+                    <br>
+                    <strong>
+                        {{ topic }}
+                    </strong>
+                    <br>
+                    <small>
+                        {{ summary }}
+                    </small>
+                </a>
+            {{/items}}
+            {{^items.length}}
+                <a class="list-group-item" href="#">
+                    <strong>
+                        Nothing here yet.
+                    </strong>
+                </a>
+            {{/items.length}}
+            {% endraw %}
+            </script>
+            <div id="userLounges"></div>
+
+            {% block admin %}
+            {% endblock %}
+        </div>
+        <div class="col-sm-5">
+            <h3 class="text-subtitle"> 
+                Bio
+                {% block edit_bio %}
+                <small>
+                    <a id="editBio" href="#">edit</a>
+                </small>
+                {% endblock %} 
+            </h3>
+            <script id="bioTemplate" type="x-tmpl-mustache">
+            {% raw %}
+                {{#bio}}
+                    {{ . }}
+                    <br>
+                {{/bio}}
+            {% endraw %}
+            </script>
+            <script id="bioEditTemplate" type="x-tmpl-mustache">
+            {% raw %}
+                <div>
+                <form id="saveEditBioForm" class="horizontal-form-element">
+                    <textarea id="editBioText" rows="5" cols="53">{{ bio }}</textarea>
+                    <br>
+                    <div style="float: left;"
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                </form>
+                <form id="cancelEditBioForm" class="horizontal-form-element" style="float: right;">
+                    <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
+                </form>
+                </div>
+            {% endraw %}
+            </script>
+            <div id="bio"></div>
+            
+            {% block host %}
+            {% endblock %}
+            {% block admin_accounts %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+<div class="modal fade" id="hostApplicationModal" tabindex="-1" role="dialog" aria-labelledby="hostApplicationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="hostApplicationForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Become a host</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="hostApplicationError">
+                    </div>
+                    <div id="check">
+                        <label>Please read the <a href="url">TL Manifesto</a>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Please answer the following questions</label>
+                        <p>1. Why would you like to host?</p>
+                        <p>2. What would make you an awesome host?</p>
+                        <p>3. Why do you care about the things you care for?</p>
+                        <p>4. What are your dreams for the world?</p>
+                        <p>5. When was the last time you did something for someone else without expecting anything in return?</p>
+                        <textarea class="form-control" rows="5" maxlength="2500" name="application"></textarea>
+                        <h6 class="max-alert">(max 2500 characters)</h6>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" id="hostApplicationFormBtn" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="account-modal" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="account-form" class="form-horizontal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Account Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="account-error"></div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">First name</label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" name="firstName" placeholder="John" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Last name
+                            <small class="text-muted">
+                                (optional)
+                            </small>
+                        </label>
+                        <div class="col-sm-6">
+                          <input type="text" class="form-control" name="lastName" placeholder="Doe">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-6">
+                          <input type="email" class="form-control" name="email" placeholder="john@berkeley.edu" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            Updates by email 
+                        </label>
+                        <div class="col-sm-6">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="notifications" value="0" checked>
+                                    Never
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="notifications" value="1">
+                                    Once a week
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="notifications" value="2">
+                                    Once every two weeks
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="notifications" value="4">
+                                    Once every month 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block hostmodals %}
+{% endblock %}
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename = 'js/user.js') }}"></script>
+{% block hostjs %}
+{% endblock %}
+{% endblock %}

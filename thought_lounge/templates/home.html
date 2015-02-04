@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid" id="headerblock">
+	<h1>Thought Lounge</h1>
+</div>
+<div class="container-fluid" id="attendblock">
+	<div class="col-md-8 col-md-offset-2">
+		<div id="attendname">
+			<h2>FEEL LIKE THINKING? SIGN UP FOR A THOUGHT LOUNGE!</h2>
+		</div>
+		<div id="attendlist">
+
+			<script id="loungesTemplate" type="x-mustache">
+			{% raw %}
+             <div class="list-group">
+             {{#items }}
+                 <a href="#" class="list-group-item"> <strong>{{ dateTime }}</strong> <small>hosted by</small> <strong>{{ host.firstName }}</strong> <span class="badge">{{ left }} spots left</span></a>
+             {{/items }}
+             </div>
+             {% endraw %}
+             </script>
+
+             <!--empty-->
+			<div id="lounges" class="list-group">
+        	</div>
+
+        </div>
+	</div>
+</div>
+<div class="container-fluid" id="infoblock">
+	<div class="col-md-8 col-md-offset-2">
+		<div id="what">
+			<h2>OK... SO WHAT'S A THOUGHT LOUNGE?</h2>
+			<h4>A thought lounge is a formatted dialogue in which 4-6 participants each bring 1 topic, which is of utmost interest to him/her and which s/he thinks needs to be talked about, to a designated place. Each participant is given 12 minutes to conduct a presentation on his/her topic and facilitate a dialogue or activity on the topic. After each topic is given its time, all topics are written up on the blackboard and 12 minutes are given to connect them all.  </h4>
+			<h4>I'm still confused.<h4>
+			<h4>Ok. You should read the <a href="#">Thought Lounge Manifesto</a></h4>
+		</div>
+		<div id="instr">
+			<h2>... AND WHAT DO I HAVE TO DO TO COME?</h2>
+			<h4>1. <a class="scroll" href="#attendblock">Sign Up</a>  </h4>
+			<h4>2. Prepare to facilitate a dialogue for 12 minutes on the topic of utmost interest and urgency to you right now. It can seriously be anything.</h4>
+			<h4>3. Read and accept in the deepest part of your soul the <a class="scroll" href="#policyblock">Thought Lounge Policy for Dialogue</a></h4>
+			<h4>4. DON'T WORRY ABOUT IT! And read the <a href="#">Thought Lounge Manifesto</a> if you are. You'll feel better.</h4>
+		</div>
+	</div>
+</div>
+<div class="container-fluid" id="videoblock">
+	<div class="col-md-8 col-md-offset-2" id="video">
+		<h2>CHECK OUT OUR AWESOME VIDEO!</h2>
+		<iframe type="text/html" width="600" height="350"
+                src="https://www.youtube.com/embed/YupKK-UTeLk" frameborder="0">
+        </iframe>
+	</div>
+</div>
+<div class="container-fluid block top-buffer bottom-buffer" id="hostsblock">
+	<div class="row text-center">
+		<div class="col-sm-12">
+			<div id="hosttxt">
+				<h2>MEET OUR AWESOME HOSTS!</h2>
+			</div>
+			<div class="list-group text-center">
+				<script id="hostsTemplate" type="x-tmpl-mustache">
+					{% raw %}
+                        {{#items}}
+				            <a class="list-group-item host-preview col-sm-4 " id="{{ href }}" href="{{ web.href }}" >
+                                <img src="{{ picture }}" height="100">
+                                <br>
+                                <strong>
+                                    {{ firstName }} 
+                                </strong>
+                            </a>
+				        {{/items}}
+                    {% endraw %}
+                </script>
+		    </div>
+		    <div id="hosts">
+		    </div>
+	    </div>
+    </div>
+</div>
+<div class="container-fluid" id="policyblock">
+	<div id="policyname">
+		<h2>THOUGHT LOUNGE POLICY FOR DIALOGUE</h2>
+	</div>
+	<div class="col-md-8 col-md-offset-2" id="policyfile">
+		<h3> HERE ARE THE 5 AGREEMENTS FOR CREATING A SAFE SPACE FOR DIALOGUE </h3>
+		<br>
+		<h4> 1.     Listen: Participants of a thought lounge respect each other by listening to the current presenter as if s/he is the most important person in the world at that moment. </h4>
+		<h4> 2.     Appear to suspend judgment/neutral body language: When a participant is talking, body language of other participants is neutral to ensure that the ideas being divulged are exactly the perspective of the speaker.</h4>
+		<h4> 3.     Harmony not at the expense of creative conflict: When participants agree/disagree with each other, it is mutually understood that they are agreeing/disagreeing with each other’s ideas, not each other’s entire selves (unless otherwise specified o.O).</h4>
+		<h4> 4.     Present/speak from the heart: Participants share personal stories in lieu of quoting "authorities" when possible. Presenters strive to relay why their topic is in their heart. There should be a clear invitation to inquiry in each presentation. The presentations are not meant to be lectures with no possibility for falsification. </h4>
+		<h4> 5.     Equity of voice: A participant (besides the presenter) mustn’t talk for more than a minute at a time to ensure all perspectives have time to be placed on the table.</h4>
+	</div>
+</div>
+<!-- <div class="" id="contactblock">
+	<div id="contactname">
+		<h2>CONTACT US</h2>
+	</div>
+	<div id="contact">
+		<h4>The Organization: thoughtloungeucb@gmail.com</h4>
+		<h4>A real person: Axel Cramer at axelzcramer@gmail.com</h4>
+	</div>
+</div> -->
+
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename = 'js/home.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container top-buffer bottom-buffer">
+    <div class="row"> 
+        <div class="col-sm-10 col-sm-offset-1 text-center">
+            <h2> 
+                {% block error %}
+                {% endblock %}
+            </h2>
+            <h3>
+                {% block subtitle %}
+                {% endblock %}
+            </h3>
+        </div>
+    </div>
+</div>
+{% endblock %}

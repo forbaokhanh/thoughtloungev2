@@ -1,0 +1,12 @@
+{{ lounge.host.first_name }},
+You have signed up to host a lounge on {{ lounge.formatted_local_date_time }} at {{ lounge.location or 'a place to be determined' }}.
+If you have not updated the location or reserved the room with the administration, please do so as soon as possible. 
+
+Please remember to email your fellow loungers informing them of the time and location of your lounge:
+{% for user_lounge in lounge.user_lounges %}
+    -{{ user_lounge.user.first_name }} ({{ user_lounge.user.email }})
+{% endfor %}
+
+Regards,
+Thought Lounge
+http://www.thoughtlounge.org

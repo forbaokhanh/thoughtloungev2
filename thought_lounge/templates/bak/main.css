@@ -1,0 +1,129 @@
+@import url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(http://fonts.googleapis.com/css?family=Arapey);
+@import url(http://www.youtube.com/embed/YupKK-UTeLk);
+/*
+ * Social Buttons for Bootstrap
+ *
+ * Copyright 2013 Panayiotis Lipiridis
+ * Licensed under the MIT License
+ *
+ * https://github.com/lipis/bootstrap-social
+ */
+
+.btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+.btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding-left:0;padding-right:0}.btn-social-icon :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+.btn-social-icon :first-child{border:none;text-align:center;width:100% !important}
+.btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:hover,.btn-facebook:focus,.btn-facebook:active,.btn-facebook.active,.open .dropdown-toggle.btn-facebook{color:#fff;background-color:#30487b;border-color:rgba(0,0,0,0.2)}
+.btn-facebook:active,.btn-facebook.active,.open .dropdown-toggle.btn-facebook{background-image:none}
+.btn-facebook.disabled,.btn-facebook[disabled],fieldset[disabled] .btn-facebook,.btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled:active,.btn-facebook[disabled]:active,fieldset[disabled] .btn-facebook:active,.btn-facebook.disabled.active,.btn-facebook[disabled].active,fieldset[disabled] .btn-facebook.active{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}
+.btn-google-plus{color:#fff;background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}.btn-google-plus:hover,.btn-google-plus:focus,.btn-google-plus:active,.btn-google-plus.active,.open .dropdown-toggle.btn-google-plus{color:#fff;background-color:#ca3523;border-color:rgba(0,0,0,0.2)}
+.btn-google-plus:active,.btn-google-plus.active,.open .dropdown-toggle.btn-google-plus{background-image:none}
+.btn-google-plus.disabled,.btn-google-plus[disabled],fieldset[disabled] .btn-google-plus,.btn-google-plus.disabled:hover,.btn-google-plus[disabled]:hover,fieldset[disabled] .btn-google-plus:hover,.btn-google-plus.disabled:focus,.btn-google-plus[disabled]:focus,fieldset[disabled] .btn-google-plus:focus,.btn-google-plus.disabled:active,.btn-google-plus[disabled]:active,fieldset[disabled] .btn-google-plus:active,.btn-google-plus.disabled.active,.btn-google-plus[disabled].active,fieldset[disabled] .btn-google-plus.active{background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}
+
+body{
+  font-family: Raleway;
+}
+body h4{
+  font-family: Arapey;
+}
+
+.input-sm, .form-group-sm .form-control {
+height: 30px;
+padding: 5px 10px;
+font-size: 12px;
+line-height: 1.5;
+width: 158px !important;
+border-radius: 3px;
+}
+.navbar-right~.navbar-right {
+margin-right: -25px;
+}
+.block {
+  margin-top: -23px;
+  text-align: center;
+  width:100%;
+  height: 600px;
+  background-color: red;
+}
+.block>h4 {
+  max-width: 500px;
+}
+#headerblock{
+  height:800px;
+  padding-top: 360px;
+}
+
+#instr{
+  margin-top:60px;
+}
+
+#infoblock{
+  height: 740px;
+  background-color: white;
+}
+
+#videoblock{
+  background-color: blue;
+}
+
+#video{
+  margin-top:40px;
+}
+
+#hostsblock{
+background-color: yellow;
+height: 580px;
+}
+#hosttxt{
+  padding-top: 16px;
+}
+
+#policyblock{
+background-color: purple;
+height: 820px;
+}
+#policyname{
+  padding-top:20px;
+}
+#attendblock{
+background-color: orange;
+height: 500px;
+}
+#contactblock{
+  height:200px;
+  background-color: white;
+}
+#contact{
+  text-align: center;
+}
+#contactname{
+  padding-top:20px;
+}
+.jumbotron {
+  text-align: center;
+}
+/*
+#facebook {
+  margin-bottom: 12px;
+}
+
+#google{
+  margin-bottom: 12px;
+}
+
+
+#signin {
+  margin-top:12px;
+ }
+
+#facebook{
+background-color: white;
+padding-top: 10px;
+}
+
+#signin{
+  padding:0px;
+}
+*/
+

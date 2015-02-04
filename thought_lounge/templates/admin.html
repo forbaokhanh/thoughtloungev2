@@ -1,0 +1,58 @@
+{% extends "host.html" %}
+
+{% block admin %}
+<h3 class="text-subtitle top-buffer">
+    Pending Host Applications 
+</h3>
+<script id="potential-hosts-template" type="x-tmpl-mustache">
+{% raw %}
+{{#items}}
+    <form class="potential-host-form">
+        <div class="list-group-item"> 
+            <small>
+                <strong>
+                    {{ firstName }} {{ lastName }}
+                </strong>
+                <br>
+                {{#hostApplications.items}}
+                    <div class="host-application" data-host-application-href="{{ href }}">
+                        {{#application}}
+                        {{.}} <br>
+                        {{/application}}
+                        <div class="btn-group pull-right" role="group">
+                            <button type="button" class="potential-host-approve-btn btn btn-sm btn-success"> 
+                                Approve
+                            </button>
+                            <button type="button" class="potential-host-deny-btn btn btn-sm btn-danger"> 
+                                Deny
+                            </button>
+                        </div>
+                    </div>
+                {{/hostApplications.items}}
+            </small>
+        </div>
+    </form>
+{{/items}}
+{{^items.length}}
+    <a class="list-group-item" href="#">
+        <strong>
+            Nothing here yet.
+        </strong>
+    </a>
+{{/items.length}}
+{% endraw %}
+</script>
+<div id="potential-hosts"></div>
+{% endblock %}
+
+{% block admin_accounts %}
+<h3 class="text-subtitle top-buffer">
+    <a href="/accounts">
+        Account Control 
+    </a>
+</h3>
+{% endblock %}
+
+{% block adminjs %}
+<script src="{{ url_for('static', filename = 'js/admin.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{{ user.first_name }},
+Hey there! We hope you're having a great semester. Thought Lounge is busy as ever and we want to see you at a lounge!
+{% for lounge in lounges %}
+    -{{ lounge.formatted_local_date_time }} with {{ lounge.host.first_name }}
+{% endfor %}
+
+Sign up at our website, http://www.thoughtlounge.org/#register-lounge. We're excited to hear your ideas!
+
+Regards,
+Thought Lounge
+http://www.thoughtlounge.org
