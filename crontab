@@ -1,0 +1,11 @@
+# minute (0-59),
+# |      hour (0-23),
+# |      |       day of the month (1-31),
+# |      |       |       month of the year (1-12),
+# |      |       |       |       day of the week (0-6 with 0=Sunday).
+# |      |       |       |       |       commands
+  0      0       *       *       0       python3 /var/www/html/thought-lounge/scheduler.py digest 1
+# Next line: every two weeks; source http://www.nicovs.be/schedule-cron-jobs-to-run-every-2-weeks/
+  0      0       8-14,22-28    * *       test $(date +%u) -eq 0 && python3 /var/www/html/thought-lounge/scheduler.py digest 2
+  0      0       1       *       *       python3 /var/www/html/thought-lounge/scheduler.py digest 4
+  0      12      *       *       *       python3 /var/www/html/thought-lounge/scheduler.py reminder 
