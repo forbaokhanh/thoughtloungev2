@@ -35,10 +35,14 @@
 </div>
 <div class="container top-buffer">
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-4 prev-lounges">
+        </div>
+        <div class="col-sm-4 user-info">
             <script id="upload-picture-template" type="x-tmpl-mustache">
-            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="100%" style="z-index:-1">
-            <br><br>
+            <div class="placeholder-pic">
+            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="50%" >
+            <br>
+            </div>
             {% raw %}
             <form id="upload-picture-form" enctype="multipart/form-data">
                 <input id="upload-picture-file" type="file" name="file" class="btn-block">
@@ -52,7 +56,7 @@
             {% endraw %}
             </script>
             
-            <script id="delete-picture-template" type="x-tmpl-mustache">
+             <script id="delete-picture-template" type="x-tmpl-mustache">
             {% raw %}
             <br>
             <form id="delete-picture-form">
@@ -69,18 +73,25 @@
             <div id="upload-picture"></div>
             <div id="delete-picture"></div>
             {% endblock %}
-
-            {% block becomehost %}
-            <button type="button" class="btn btn-primary btn-sm btn-block top-buffer" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
-                Become a host
-            </button>
-            {% endblock %}
-            {% block account %} 
-            <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer" data-toggle="modal" data-target="#account-modal">
-                <i class="fa fa-cog fa-fw"></i>
-                Account
-            </button>
-            {% endblock %}
+            <div class="col-sm-4 col-sm-offset-3">
+                {% block becomehost %}
+                <button type="button" class="btn btn-primary btn-sm top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
+                    Become a host
+                </button>
+                {% endblock %}
+                <br>
+                {% block account %} 
+                <button id="account-modal-btn" type="button" class="btn btn-default btn-sm top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
+                    <i class="fa fa-cog fa-fw"></i>
+                    Account
+                </button>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-sm-4 up-lounges">
+        </div>
+        <!-- <div class="col-sm-2">
+            
         </div>
         <div class="col-sm-5">
             <h3 class="text-subtitle">
@@ -195,7 +206,7 @@
             {% endblock %}
             {% block admin_accounts %}
             {% endblock %}
-        </div>
+        </div> -->
     </div>
 </div>
 {% endblock %}
