@@ -29,9 +29,17 @@ body{
   padding-right: 20px;
 }
 
+#welcomeMessage h2{
+  font-size: 2em;
+}
+
 textarea {
   border-style: dashed;
 border-width: 2px;
+}
+.register-button {
+  padding: 1.3em 2.3em;
+  color:#2196f3;
 }
 /*Styling the navbar with a signup button*/
 .input-sm, .form-group-sm .form-control {
