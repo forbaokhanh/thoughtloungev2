@@ -11,33 +11,64 @@
 </script>
 
 <div class="container top-buffer">
-    <div class="row"> 
-        <div class="col-sm-10 col-sm-offset-1 text-center">
-            <button type="#" class="btn btn-lg btn-default register-button" style="
-            color: #2196f3;
-            ">Sign Up for a Thought Lounge</button>
-        </div>
-        <!-- <div class="col-sm-10 col-sm-offset-1 text-center">
-            {% block welcome_message %}
-            <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
+    <div class="row">
+        <!-- Sign Up for a TL Button -->
+            <div class="text-center sign-up-button">
+                <button type="#" class="btn btn-lg btn-default register-button" style="
+                color: #2196f3;
+                ">Sign Up for a Thought Lounge</button>
+            </div>
+
+    </div>
+
+    <div class="row">
+
+        <!-- Previous Lounges -->
+        <div class="col-sm-4 prev-lounges">
+            <div class="panel panel-default user-lounge-display">
+                <div class="panel-heading">
+                    <h4 class="text-subtitle"> 
+                        {% block your_previous_lounges %}
+                        Your
+                        {% endblock %}
+                        Previous Lounges
+                    </h4>
+                </div>
+            <script id="userLoungesTemplate" type="x-tmpl-mustache">
             {% raw %}
-                <h2>
-                    Welcome,
-                    <span class="header-primary">{{ firstName }}</span>. 
-                    You have attended <span class="header-primary">{{ userLounges.items.length }}</span> {{ loungePlurality }} so far.
-                </h2>
+            {{#items}}
+                <a class="list-group-item" href="{{ lounge.web.href }}">
+                    <strong>
+                        <small>
+                            {{ lounge.dateTime }}
+                        </small>
+                    </strong>
+                    <br>
+                    <strong>
+                        {{ topic }}
+                    </strong>
+                    <br>
+                    <small>
+                        {{ summary }}
+                    </small>
+                </a>
+            {{/items}}
+            {{^items.length}}
+                <a class="list-group-item" href="#">
+                    <strong>
+                        Nothing here yet.
+                    </strong>
+                </a>
+            {{/items.length}}
             {% endraw %}
             </script>
-            {% endblock %}
-            <div id="welcomeMessage"></div>
-        </div> -->
-    </div>
-</div>
-<div class="container top-buffer">
-    <div class="row">
-        <div class="col-sm-4 prev-lounges">
+            <div id="userLounges"></div>
+            </div>
         </div>
-        <div class="col-sm-4 user-info">
+
+        <!-- User Information -->
+        <div class="col-sm-4 user-info">  
+
             <script id="upload-picture-template" type="x-tmpl-mustache">
             <div class="placeholder-pic">
             <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="50%" >
@@ -56,7 +87,7 @@
             {% endraw %}
             </script>
             
-             <script id="delete-picture-template" type="x-tmpl-mustache">
+            <script id="delete-picture-template" type="x-tmpl-mustache">
             {% raw %}
             <br>
             <form id="delete-picture-form">
@@ -88,23 +119,21 @@
                 {% endblock %}
             </div>
         </div>
+
+        <!-- Upcoming Lounges -->
         <div class="col-sm-4 up-lounges">
-        </div>
-        <!-- <div class="col-sm-2">
-            
-        </div>
-        <div class="col-sm-5">
-            <h3 class="text-subtitle">
-                {% block your_upcoming_lounges %}
-                Your
-                {% endblock %}
-                Upcoming Lounges
-                {% block register_lounge %}
-                <small>
-                    <a href="/#register-lounge">register for a lounge</a>
-                </small>
-                {% endblock %}
-            </h3>
+            <div class="panel panel-default user-lounge-display">
+                <div class="panel-heading">
+                    <h4 class="text-subtitle">
+                        {% block your_upcoming_lounges %}
+                        Your
+                        {% endblock %}
+                        Upcoming Lounges
+                        {% block register_lounge %}
+                        {% endblock %}
+                    </h4>
+                </div>
+            <div id="upcomingUserLounges"> </div>
             <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
                 {% raw %}
                 {{#items}}
@@ -126,45 +155,30 @@
                 {{/items.length}}
                 {% endraw %}
             </script>
-            <div id="upcomingUserLounges"> </div>
-            <h3 class="text-subtitle"> 
-                {% block your_previous_lounges %}
-                Your
-                {% endblock %}
-                Previous Lounges
-                <br>
-                <small>(click a lounge to view its log)</small>
-            </h3>
-            <script id="userLoungesTemplate" type="x-tmpl-mustache">
-            {% raw %}
-            {{#items}}
-                <a class="list-group-item" href="{{ lounge.web.href }}">
-                    <strong>
-                        <small>
-                            {{ lounge.dateTime }}
-                        </small>
-                    </strong>
-                    <br>
-                    <strong>
-                        {{ topic }}
-                    </strong>
-                    <br>
-                    <small>
-                        {{ summary }}
-                    </small>
-                </a>
-            {{/items}}
-            {{^items.length}}
-                <a class="list-group-item" href="#">
-                    <strong>
-                        Nothing here yet.
-                    </strong>
-                </a>
-            {{/items.length}}
-            {% endraw %}
-            </script>
-            <div id="userLounges"></div>
+            </div>
+        </div>
 
+    </div>
+
+    <!-- User Bio -->
+    <div class="row user-bio">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
+            
+                <h4>
+                    Who is <username>
+                    <span class="header-primary">{{ firstName }}</span>? 
+                </h4>
+            
+                </script>
+                <div class="text-center"id="welcomeMessage">
+                </div>
+            </div>
+        </div>
+    </div>
+        <!--
+        <div class="col-sm-5">
             {% block admin %}
             {% endblock %}
         </div>
@@ -212,6 +226,9 @@
 {% endblock %}
 
 {% block modals %}
+
+
+<!-- Become a Host Modal -->
 <div class="modal fade" id="hostApplicationModal" tabindex="-1" role="dialog" aria-labelledby="hostApplicationLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -246,6 +263,8 @@
         </div>
     </div>
 </div>
+
+<!-- Account Settings Modal -->
 <div class="modal fade" id="account-modal" tabindex="-1" role="dialog" aria-labelledby="account-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

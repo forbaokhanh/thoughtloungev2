@@ -36,7 +36,13 @@ body{
 .placeholder-pic img{
   position: relative;
   left: 25%;
+  border-radius: 2em;
 }
+
+.user-lounge-display {
+  margin-top: 1.5em;
+}
+
 #upload-picture form {
   position: relative;
   left: 25%;

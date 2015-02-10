@@ -23,8 +23,11 @@ function loadUserOrPreview() {
 
 function loadWelcomeMessage() {
     var user = loadUserOrPreview();
+    console.log(user.firstName);
     var template = $('#welcomeMessageTemplate').html();
+    console.log(template);
     var rendered = Mustache.render(template, user);
+    console.log(rendered);
     $('#welcomeMessage').html(rendered);
 }
 
@@ -173,9 +176,8 @@ $('#upload-picture').on('submit', '#upload-picture-form', function(event) {
     event.preventDefault();
     
     var user = loadUserOrPreview();
-
     var data = new FormData($('#upload-picture-form')[0]);
-
+    console.log(data);
     $.ajax({
         type: 'POST',
         url: '/api/pictures/',
