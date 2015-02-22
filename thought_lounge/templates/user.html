@@ -91,7 +91,7 @@
             {% raw %}
             <br>
             <form id="delete-picture-form">
-                <button type="submit" class="btn btn-danger btn-sm btn-block">
+                <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer userInfo">
                     Delete this picture
                 </button>
             </form>
@@ -104,20 +104,19 @@
             <div id="upload-picture"></div>
             <div id="delete-picture"></div>
             {% endblock %}
-            <div class="col-sm-4 col-sm-offset-3">
+            <!-- <div class="col-sm-4 col-sm-offset-3"> -->
                 {% block becomehost %}
-                <button type="button" class="btn btn-primary btn-sm top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
+                <button type="button" class="btn btn-primary btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
                     Become a host
                 </button>
                 {% endblock %}
-                <br>
                 {% block account %} 
-                <button id="account-modal-btn" type="button" class="btn btn-default btn-sm top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
+                <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
                     <i class="fa fa-cog fa-fw"></i>
                     Account
                 </button>
                 {% endblock %}
-            </div>
+            <!-- </div> -->
         </div>
 
         <!-- Upcoming Lounges -->
@@ -165,12 +164,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
-            
+                {% raw %}
                 <h4>
-                    Who is <username>
+                    Who is
                     <span class="header-primary">{{ firstName }}</span>? 
                 </h4>
-            
+                {% endraw %}
                 </script>
                 <div class="text-center"id="welcomeMessage">
                 </div>

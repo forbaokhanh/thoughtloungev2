@@ -47,6 +47,10 @@ body{
   position: relative;
   left: 25%;
 }
+
+.modal-body {
+  padding
+}
 .modal-content {
   padding-left: 20px;
   padding-right: 20px;
