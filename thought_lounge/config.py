@@ -15,6 +15,7 @@ PROPAGATE_EXCEPTIONS = True
 
 MAIL_USERNAME = 'thoughtloungeucb@gmail.com'
 MAIL_DEFAULT_SENDER = '"Thought Lounge" <thoughtloungeucb@gmail.com>'
+MAIL_PASSWORD = 'thoughtloungeorg6'
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True

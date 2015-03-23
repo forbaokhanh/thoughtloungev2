@@ -23,17 +23,16 @@ function loadUserOrPreview() {
 
 function loadWelcomeMessage() {
     var user = loadUserOrPreview();
-    console.log(user.firstName);
     var template = $('#welcomeMessageTemplate').html();
-    console.log(template);
     var rendered = Mustache.render(template, user);
-    console.log(rendered);
     $('#welcomeMessage').html(rendered);
 }
 
 function loadBio() {
+    console.log('loading bio');
     var user = loadUserOrPreview();
     user.originalBio = user.bio;
+    console.log(user.originalBio);
     user.bio = user.originalBio.split('\n');
     var template = $('#bioTemplate').html();
     var rendered = Mustache.render(template, user);
@@ -177,7 +176,6 @@ $('#upload-picture').on('submit', '#upload-picture-form', function(event) {
     
     var user = loadUserOrPreview();
     var data = new FormData($('#upload-picture-form')[0]);
-    console.log(data);
     $.ajax({
         type: 'POST',
         url: '/api/pictures/',

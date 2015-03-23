@@ -10,16 +10,130 @@
     var hostHref = "{{ hostHref or ''}}";
 </script>
 
+<div class="container-fluid background-pic" >
+</div>
+
 <div class="container top-buffer">
-    <div class="row">
-        <!-- Sign Up for a TL Button -->
+	<div class="row">
+		<div class="col-sm-2 user-info">
+			<script id="upload-picture-template" type="x-tmpl-mustache">
+            <div class="user-pic">
+            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
+            <br>
+            </div>
+            {% raw %}
+            <form id="upload-picture-form" enctype="multipart/form-data">
+                <input id="upload-picture-file" type="file" name="file" class="btn-block">
+            </form>
+            {% endraw %}
+            </script>
+
+            <script id="picture-template" type="x-tmpl-mustache">
+            {% raw %}
+            <img class="img-responsive image-center user-pic" src="{{ image }}">
+            {% endraw %}
+            </script>
+            
+            <script id="delete-picture-template" type="x-tmpl-mustache">
+            {% raw %}
+            <form id="delete-picture-form">
+                <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer delete-pic">
+                    Delete this picture
+                </button>
+            </form>
+            {% endraw %}
+            </script>
+
+            <div id="picture-error"></div>
+            <div id="picture"></div>
+            {% block picture_control %}
+            <div id="upload-picture"></div>
+            <div id="delete-picture"></div>
+            {% endblock %}
+		</div>
+		<div class="col-sm-2">
+			{% block becomehost %}
+            <button type="button" class="btn btn-primary btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal">
+                Become a host
+            </button>
+            {% endblock %}
+		</div>
+		<div class="col-sm-2">
+			{% block account %} 
+            <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
+                <i class="fa fa-cog fa-fw"></i>
+                Account
+            </button>
+            {% endblock %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			 <!-- Sign Up for a TL Button -->
             <div class="text-center sign-up-button">
                 <button type="#" class="btn btn-lg btn-default register-button" style="
                 color: #2196f3;
                 ">Sign Up for a Thought Lounge</button>
             </div>
-
-    </div>
+		</div>
+	</div>
+	<div class="row user-bio">
+		<div class="col-sm-4">
+			<div class="panel panel-default">
+	            <div class="panel-heading">
+	                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
+	                {% raw %}
+	                <h5>
+	                    Who is
+	                    <span class="header-primary">{{ firstName }}</span>? 
+	                </h5>
+	                {% endraw %}
+	                </script>
+	                <div class="text-center"id="welcomeMessage">
+	                </div>
+	            </div>
+	            <div class="panel-body bio-panel">
+	                <ul class="list-group bio-list-group">
+	                  <li class="list-group-item left-align">
+	                    Brief introduction!
+	                    {% block edit_bio %}
+	                    <small>
+	                        <a id="editBio" href="#">edit</a>
+	                    </small>
+	                    {% endblock %} 
+	                    <script id="bioTemplate" type="x-tmpl-mustache">
+	                    {% raw %}
+	                        {{#bio}}
+	                            {{ . }}
+	                            <br>
+	                        {{/bio}}
+	                    {% endraw %}
+	                    </script>
+	                    <script id="bioEditTemplate" type="x-tmpl-mustache">
+	                    {% raw %}
+	                        <div>
+	                        <form id="saveEditBioForm" class="horizontal-form-element">
+	                            <textarea id="editBioText" rows="3" cols="110">{{ bio }}</textarea>
+	                            <br>
+	                            <div style="float: left;"
+	                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+	                        </form>
+	                        </div>
+	                    {% endraw %}
+	                    </script>
+	                    <div id="bio"></div>
+	                  </li>
+	                  <li class="list-group-item">
+	                    What is your story?
+	                  </li>
+	                  <li class="list-group-item left-align">
+	                    What might we talk about?
+	                  </li>
+	                </ul>
+	            </div>
+	        </div>
+		</div>
+	</div>
 
     <div class="row">
 
@@ -66,59 +180,6 @@
             </div>
         </div>
 
-        <!-- User Information -->
-        <div class="col-sm-4 user-info">  
-
-            <script id="upload-picture-template" type="x-tmpl-mustache">
-            <div class="placeholder-pic">
-            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="50%" >
-            <br>
-            </div>
-            {% raw %}
-            <form id="upload-picture-form" enctype="multipart/form-data">
-                <input id="upload-picture-file" type="file" name="file" class="btn-block">
-            </form>
-            {% endraw %}
-            </script>
-
-            <script id="picture-template" type="x-tmpl-mustache">
-            {% raw %}
-            <img class="img-responsive image-center" src="{{ image }}">
-            {% endraw %}
-            </script>
-            
-            <script id="delete-picture-template" type="x-tmpl-mustache">
-            {% raw %}
-            <br>
-            <form id="delete-picture-form">
-                <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer userInfo">
-                    Delete this picture
-                </button>
-            </form>
-            {% endraw %}
-            </script>
-
-            <div id="picture-error"></div>
-            <div id="picture"></div>
-            {% block picture_control %}
-            <div id="upload-picture"></div>
-            <div id="delete-picture"></div>
-            {% endblock %}
-            <!-- <div class="col-sm-4 col-sm-offset-3"> -->
-                {% block becomehost %}
-                <button type="button" class="btn btn-primary btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
-                    Become a host
-                </button>
-                {% endblock %}
-                {% block account %} 
-                <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
-                    <i class="fa fa-cog fa-fw"></i>
-                    Account
-                </button>
-                {% endblock %}
-            <!-- </div> -->
-        </div>
-
         <!-- Upcoming Lounges -->
         <div class="col-sm-4 up-lounges">
             <div class="panel panel-default user-lounge-display">
@@ -157,63 +218,6 @@
             </div>
         </div>
 
-    </div>
-
-    <!-- User Bio -->
-    <div class="row user-bio">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
-                {% raw %}
-                <h4>
-                    Who is
-                    <span class="header-primary">{{ firstName }}</span>? 
-                </h4>
-                {% endraw %}
-                </script>
-                <div class="text-center"id="welcomeMessage">
-                </div>
-            </div>
-            <div class="panel-body bio-panel">
-                <ul class="list-group bio-list-group">
-                  <li class="list-group-item left-align">
-                    Brief introduction!
-                    {% block edit_bio %}
-                    <small>
-                        <a id="editBio" href="#">edit</a>
-                    </small>
-                    {% endblock %} 
-                    <script id="bioTemplate" type="x-tmpl-mustache">
-                    {% raw %}
-                        {{#bio}}
-                            {{ . }}
-                            <br>
-                        {{/bio}}
-                    {% endraw %}
-                    </script>
-                    <script id="bioEditTemplate" type="x-tmpl-mustache">
-                    {% raw %}
-                        <div>
-                        <form id="saveEditBioForm" class="horizontal-form-element">
-                            <textarea id="editBioText" rows="3" cols="110">{{ bio }}</textarea>
-                            <br>
-                            <div style="float: left;"
-                            <button type="submit" class="btn btn-success btn-sm">Save</button>
-                        </form>
-                        </div>
-                    {% endraw %}
-                    </script>
-                    <div id="bio"></div>
-                  </li>
-                  <li class="list-group-item">
-                    What is your story?
-                  </li>
-                  <li class="list-group-item left-align">
-                    What might we talk about?
-                  </li>
-                </ul>
-            </div>
-        </div>
     </div>
         
         <div class="col-sm-5">
