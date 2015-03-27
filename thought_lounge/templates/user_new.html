@@ -14,8 +14,8 @@
 </div>
 
 <div class="container top-buffer">
-	<div class="row">
-		<div class="col-sm-2 user-info">
+	<div class="row user-info">
+		<div class="col-sm-2">
 			<script id="upload-picture-template" type="x-tmpl-mustache">
             <div class="user-pic">
             <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
@@ -67,7 +67,7 @@
             {% endblock %}
 		</div>
 	</div>
-	<div class="row">
+	<div class="row sign-up">
 		<div class="col-sm-4">
 			 <!-- Sign Up for a TL Button -->
             <div class="text-center sign-up-button">
@@ -77,8 +77,8 @@
             </div>
 		</div>
 	</div>
-	<div class="row user-bio">
-		<div class="col-sm-4">
+	<div class="row upcoming">
+		<div class="col-sm-4 user-bio">
 			<div class="panel panel-default">
 	            <div class="panel-heading">
 	                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
@@ -133,12 +133,47 @@
 	            </div>
 	        </div>
 		</div>
-	</div>
-
-    <div class="row">
-
+        <div class="col-sm-8 up-lounges">
+            <!-- Upcoming Lounges -->
+            <div class="panel panel-default user-lounge-display">
+                <div class="panel-heading">
+                    <h4 class="text-subtitle">
+                        {% block your_upcoming_lounges %}
+                        Your
+                        {% endblock %}
+                        Upcoming Lounges
+                        {% block register_lounge %}
+                        {% endblock %}
+                    </h4>
+                </div>
+            <div id="upcomingUserLounges"> </div>
+                <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
+                    {% raw %}
+                    {{#items}}
+                        <div class="list-group-item"> 
+                            <strong>
+                                <small>
+                                    {{ lounge.dateTime }} 
+                                    at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                                </small>
+                            </strong>
+                        </div>
+                    {{/items}}
+                    {{^items.length}}
+                        <div class="list-group-item">
+                            <strong>
+                                Nothing here yet.
+                            </strong>
+                        </div>
+                    {{/items.length}}
+                    {% endraw %}
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="row previous">
         <!-- Previous Lounges -->
-        <div class="col-sm-4 prev-lounges">
+        <div class="col-sm-8 col-sm-offset-4 prev-lounges">
             <div class="panel panel-default user-lounge-display">
                 <div class="panel-heading">
                     <h4 class="text-subtitle"> 
@@ -179,45 +214,6 @@
             <div id="userLounges"></div>
             </div>
         </div>
-
-        <!-- Upcoming Lounges -->
-        <div class="col-sm-4 up-lounges">
-            <div class="panel panel-default user-lounge-display">
-                <div class="panel-heading">
-                    <h4 class="text-subtitle">
-                        {% block your_upcoming_lounges %}
-                        Your
-                        {% endblock %}
-                        Upcoming Lounges
-                        {% block register_lounge %}
-                        {% endblock %}
-                    </h4>
-                </div>
-            <div id="upcomingUserLounges"> </div>
-            <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
-                {% raw %}
-                {{#items}}
-                    <div class="list-group-item"> 
-                        <strong>
-                            <small>
-                                {{ lounge.dateTime }} 
-                                at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
-                            </small>
-                        </strong>
-                    </div>
-                {{/items}}
-                {{^items.length}}
-                    <div class="list-group-item">
-                        <strong>
-                            Nothing here yet.
-                        </strong>
-                    </div>
-                {{/items.length}}
-                {% endraw %}
-            </script>
-            </div>
-        </div>
-
     </div>
         
         <div class="col-sm-5">

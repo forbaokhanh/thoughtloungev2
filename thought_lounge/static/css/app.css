@@ -23,29 +23,32 @@
 body{
   font-family: Raleway;
 }
+
+.sign-up {
+  margin-top: 2em;
+}
 .delete-pic {
-  width: 12.3em;
-  margin: 1em;
+  margin: 0 auto;
+  margin-top: 0.4em;
+  width: 12.4em;
 }
 .user-info {
-  margin-top: 1.5em;
+  margin-top: 0.5em;
 }
 
 .background-pic {
   background-image: url(../img/Welcome-To-Paradise-.jpg);
-  height: 23em;
+  height: 24em;
+  margin-top: -1.7em;
 }
 
 .panel-heading {
   padding: 0.6em;
 }
 
-.user-bio {
-  margin-top: 1em;
-}
 .user-pic {
   margin: auto;
-  margin-top: -12em;
+  margin-top: -9em;
 }
 .placeholder-pic img{
   position: relative;
@@ -53,10 +56,12 @@ body{
   border-radius: 2em;
 }
 
-.user-lounge-display {
-  margin-top: 1.5em;
+.upcoming {
+  margin-top: 2em;
 }
-
+.previous {
+  margin-top: 2em;
+}
 #upload-picture form {
   position: relative;
   left: 25%;
