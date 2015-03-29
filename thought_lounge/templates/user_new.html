@@ -52,20 +52,24 @@
             {% endblock %}
 		</div>
 		<div class="col-sm-2">
-			{% block becomehost %}
-            <button type="button" class="btn btn-primary btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal">
+			{% block first %}
+            <button type="button" class="btn btn-primary btn btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal">
                 Become a host
             </button>
             {% endblock %}
 		</div>
 		<div class="col-sm-2">
-			{% block account %} 
-            <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
+			{% block second %} 
+            <button id="account-modal-btn" type="button" class="btn btn-default btn btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
                 <i class="fa fa-cog fa-fw"></i>
                 Account
             </button>
             {% endblock %}
 		</div>
+        <div class="col-sm-2">
+            {% block third %}
+            {% endblock %}
+        </div>
 	</div>
 	<div class="row sign-up">
 		<div class="col-sm-4">
@@ -83,10 +87,6 @@
 	</div>
 	<div class="row upcoming">
 		<div class="col-sm-4 user-bio">
-            {% block admin %}
-            {% endblock %}
-            {% block admin_accounts %}
-            {% endblock %}
 			<div class="panel panel-default">
 	            <div class="panel-heading">
 	                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
@@ -140,6 +140,10 @@
 	                </ul>
 	            </div>
 	        </div>
+            {% block admin %}
+            {% endblock %}
+            {% block admin_accounts %}
+            {% endblock %}
 		</div>
         <div class="col-sm-8 up-lounges">
             {% block host %}
