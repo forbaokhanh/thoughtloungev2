@@ -59,20 +59,10 @@ body{
 .upcoming {
   margin-top: 2em;
 }
-.previous {
-  margin-top: 2em;
-}
+
 #upload-picture form {
   position: relative;
   left: 25%;
-}
-
-.bio-panel {
-  padding: 0px;
-}
-
-.bio-list-group {
-  margin: 0px;
 }
 
 .left-align {
@@ -92,7 +82,6 @@ body{
 }
 
 textarea {
-  border-style: dashed;
 border-width: 2px;
 }
 .register-button {

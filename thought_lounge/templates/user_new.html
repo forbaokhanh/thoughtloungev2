@@ -72,7 +72,7 @@
         </div>
 	</div>
 	<div class="row sign-up">
-		<div class="col-sm-4">
+		<div class="col-sm-4 col-sm-offset-4">
 			 <!-- Sign Up for a TL Button -->
             <div class="text-center sign-up-button">
                 <button type="#" class="btn btn-lg btn-default register-button" style="
@@ -88,56 +88,41 @@
 	<div class="row upcoming">
 		<div class="col-sm-4 user-bio">
 			<div class="panel panel-default">
-	            <div class="panel-heading">
-	                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
-	                {% raw %}
-	                <h5>
-	                    Who is
-	                    <span class="header-primary">{{ firstName }}</span>? 
-	                </h5>
-	                {% endraw %}
-	                </script>
-	                <div class="text-center"id="welcomeMessage">
-	                </div>
+	            <div class="panel-heading text-center">
+                    <h5>
+                    About me 
+                    {% block edit_bio %}
+                    <small>
+                        <a id="editBio" href="#">edit</a>
+                    </small>
+                    {% endblock %} 
+                    </h5>
 	            </div>
-	            <div class="panel-body bio-panel">
-	                <ul class="list-group bio-list-group">
-	                  <li class="list-group-item left-align">
-	                    Brief introduction!
-	                    {% block edit_bio %}
-	                    <small>
-	                        <a id="editBio" href="#">edit</a>
-	                    </small>
-	                    {% endblock %} 
-	                    <script id="bioTemplate" type="x-tmpl-mustache">
-	                    {% raw %}
-	                        {{#bio}}
-	                            {{ . }}
-	                            <br>
-	                        {{/bio}}
-	                    {% endraw %}
-	                    </script>
-	                    <script id="bioEditTemplate" type="x-tmpl-mustache">
-	                    {% raw %}
-	                        <div>
-	                        <form id="saveEditBioForm" class="horizontal-form-element">
-	                            <textarea id="editBioText" rows="3" cols="110">{{ bio }}</textarea>
-	                            <br>
-	                            <div style="float: left;"
-	                            <button type="submit" class="btn btn-success btn-sm">Save</button>
-	                        </form>
-	                        </div>
-	                    {% endraw %}
-	                    </script>
-	                    <div id="bio"></div>
-	                  </li>
-	                  <li class="list-group-item">
-	                    What is your story?
-	                  </li>
-	                  <li class="list-group-item left-align">
-	                    What might we talk about?
-	                  </li>
-	                </ul>
+	            <div class="panel-body left-align">
+                    <script id="bioTemplate" type="x-tmpl-mustache">
+                    {% raw %}
+                        <h5>{{#bio}}
+                            {{ . }}
+                            <br>
+                        {{/bio}}</h5>
+                    {% endraw %}
+                    </script>
+                    <script id="bioEditTemplate" type="x-tmpl-mustache">
+                    {% raw %}
+                        <div>
+                        <form id="saveEditBioForm" class="horizontal-form-element">
+                            <textarea id="editBioText" rows="3" cols="40">{{ bio }}</textarea>
+                            <br>
+                            <div style="float: left;">
+                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+                        </form>
+                        <form id="cancelEditBioForm" class="horizontal-form-element" style="float: right;">
+                            <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
+                        </form>
+                        </div>
+                    {% endraw %}
+                    </script>
+                    <div id="bio"></div>
 	            </div>
 	        </div>
             {% block admin %}
@@ -145,87 +130,88 @@
             {% block admin_accounts %}
             {% endblock %}
 		</div>
-        <div class="col-sm-8 up-lounges">
-            {% block host %}
-            {% endblock %}
-            <!-- Upcoming Lounges -->
-            <div class="panel panel-default user-lounge-display">
-                <div class="panel-heading">
-                    <h4 class="text-subtitle">
-                        {% block your_upcoming_lounges %}
-                        Your
-                        {% endblock %}
-                        Upcoming Lounges
-                        {% block register_lounge %}
-                        {% endblock %}
-                    </h4>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="up-lounges">
+                    {% block host %}
+                    {% endblock %}
+                    <!-- Upcoming Lounges -->
+                    <div class="panel panel-default user-lounge-display">
+                        <div class="panel-heading">
+                            <h4 class="text-subtitle">
+                                {% block your_upcoming_lounges %}
+                                Your
+                                {% endblock %}
+                                Upcoming Lounges
+                                {% block register_lounge %}
+                                {% endblock %}
+                            </h4>
+                        </div>
+                    <div id="upcomingUserLounges"> </div>
+                        <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
+                            {% raw %}
+                            {{#items}}
+                                <div class="list-group-item"> 
+                                    <strong>
+                                        <small>
+                                            {{ lounge.dateTime }} 
+                                            at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                                        </small>
+                                    </strong>
+                                </div>
+                            {{/items}}
+                            {{^items.length}}
+                                <div class="list-group-item">
+                                    <strong>
+                                        Nothing here yet.
+                                    </strong>
+                                </div>
+                            {{/items.length}}
+                            {% endraw %}
+                        </script>
+                    </div>
                 </div>
-            <div id="upcomingUserLounges"> </div>
-                <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
+                <div class="prev-lounges previous">
+                    <div class="panel panel-default user-lounge-display">
+                        <div class="panel-heading">
+                            <h4 class="text-subtitle"> 
+                                {% block your_previous_lounges %}
+                                Your
+                                {% endblock %}
+                                Previous Lounges
+                            </h4>
+                        </div>
+                    <script id="userLoungesTemplate" type="x-tmpl-mustache">
                     {% raw %}
                     {{#items}}
-                        <div class="list-group-item"> 
+                        <a class="list-group-item" href="{{ lounge.web.href }}">
                             <strong>
                                 <small>
-                                    {{ lounge.dateTime }} 
-                                    at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                                    {{ lounge.dateTime }}
                                 </small>
                             </strong>
-                        </div>
+                            <br>
+                            <strong>
+                                {{ topic }}
+                            </strong>
+                            <br>
+                            <small>
+                                {{ summary }}
+                            </small>
+                        </a>
                     {{/items}}
                     {{^items.length}}
-                        <div class="list-group-item">
+                        <a class="list-group-item" href="#">
                             <strong>
                                 Nothing here yet.
                             </strong>
-                        </div>
+                        </a>
                     {{/items.length}}
                     {% endraw %}
-                </script>
-            </div>
-        </div>
-    </div>
-    <div class="row previous">
-        <!-- Previous Lounges -->
-        <div class="col-sm-8 col-sm-offset-4 prev-lounges">
-            <div class="panel panel-default user-lounge-display">
-                <div class="panel-heading">
-                    <h4 class="text-subtitle"> 
-                        {% block your_previous_lounges %}
-                        Your
-                        {% endblock %}
-                        Previous Lounges
-                    </h4>
+                    </script>
+                    <div id="userLounges"></div>
+                    </div>
                 </div>
-            <script id="userLoungesTemplate" type="x-tmpl-mustache">
-            {% raw %}
-            {{#items}}
-                <a class="list-group-item" href="{{ lounge.web.href }}">
-                    <strong>
-                        <small>
-                            {{ lounge.dateTime }}
-                        </small>
-                    </strong>
-                    <br>
-                    <strong>
-                        {{ topic }}
-                    </strong>
-                    <br>
-                    <small>
-                        {{ summary }}
-                    </small>
-                </a>
-            {{/items}}
-            {{^items.length}}
-                <a class="list-group-item" href="#">
-                    <strong>
-                        Nothing here yet.
-                    </strong>
-                </a>
-            {{/items.length}}
-            {% endraw %}
-            </script>
-            <div id="userLounges"></div>
             </div>
         </div>
     </div>

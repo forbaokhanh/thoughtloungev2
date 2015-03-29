@@ -46,9 +46,6 @@ def user_new():
     elif g.user.role == 'admin':
         return render_template('admin_new.html')
 
-@app.route('/admin_new/')
-def admin_new():
-    return render_template('admin_new.html')
 
 @app.route('/user/<int:host_id>/')
 def host_preview(host_id):
@@ -79,7 +76,9 @@ def contact():
 
 @app.route('/accounts/')
 def accounts():
-    return render_template('accounts.html')
+    if g.user and g.user.role == 'admin':
+        return render_template('accounts.html')
+    flask_abort(403)
 
 @app.errorhandler(401)
 def not_authenticated(e):
