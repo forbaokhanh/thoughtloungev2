@@ -76,9 +76,17 @@
                 ">Sign Up for a Thought Lounge</button>
             </div>
 		</div>
+        <div class="col-sm-4">
+            {% block hostSign %}
+            {% endblock %}
+        </div>
 	</div>
 	<div class="row upcoming">
 		<div class="col-sm-4 user-bio">
+            {% block admin %}
+            {% endblock %}
+            {% block admin_accounts %}
+            {% endblock %}
 			<div class="panel panel-default">
 	            <div class="panel-heading">
 	                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
@@ -134,6 +142,8 @@
 	        </div>
 		</div>
         <div class="col-sm-8 up-lounges">
+            {% block host %}
+            {% endblock %}
             <!-- Upcoming Lounges -->
             <div class="panel panel-default user-lounge-display">
                 <div class="panel-heading">
@@ -213,12 +223,6 @@
             </script>
             <div id="userLounges"></div>
             </div>
-        </div>
-    </div>
-        
-        <div class="col-sm-5">
-            {% block admin %}
-            {% endblock %}
         </div>
     </div>
 </div>

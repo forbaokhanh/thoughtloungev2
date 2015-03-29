@@ -91,4 +91,5 @@ function updateRole(userHref, role) {
             updateRoleError();           
         });
     });
+    console.log(user.role);
 }
