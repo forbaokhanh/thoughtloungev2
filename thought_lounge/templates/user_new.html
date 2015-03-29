@@ -18,7 +18,7 @@
 		<div class="col-sm-2">
 			<script id="upload-picture-template" type="x-tmpl-mustache">
             <div class="user-pic">
-            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
+            <img class="user-pic-img" src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
             <br>
             </div>
             {% raw %}
@@ -93,7 +93,7 @@
                     About me 
                     {% block edit_bio %}
                     <small>
-                        <a id="editBio" href="#">edit</a>
+                        <a id="editBio" href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </small>
                     {% endblock %} 
                     </h5>
@@ -116,7 +116,7 @@
                             <div style="float: left;">
                             <button type="submit" class="btn btn-success btn-sm">Save</button>
                         </form>
-                        <form id="cancelEditBioForm" class="horizontal-form-element" style="float: right;">
+                        <form id="cancelEditBioForm" class="horizontal-form-element cancelButton" style="float: right;">
                             <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
                         </form>
                         </div>

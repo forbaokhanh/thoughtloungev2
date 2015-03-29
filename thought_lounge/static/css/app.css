@@ -40,6 +40,7 @@ body{
   background-image: url(../img/Welcome-To-Paradise-.jpg);
   height: 24em;
   margin-top: -1.7em;
+  background-position: 25%;
 }
 
 .panel-heading {
@@ -49,6 +50,9 @@ body{
 .user-pic {
   margin: auto;
   margin-top: -9em;
+}
+.user-pic-img {
+  border-radius: 10%;
 }
 .placeholder-pic img{
   position: relative;
@@ -67,6 +71,10 @@ body{
 
 .left-align {
   text-align: end;
+}
+
+.cancelButton {
+  margin-left: 0.5em;
 }
 
 .modal-body {

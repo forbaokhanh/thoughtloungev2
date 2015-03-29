@@ -29,17 +29,6 @@ def user():
     if not g.user:
         flask_abort(401)
     elif g.user.role == 'lounger':
-        return render_template('user.html')
-    elif g.user.role == 'host':
-        return render_template('host.html')
-    elif g.user.role == 'admin':
-        return render_template('admin.html')
-
-@app.route('/user_new/')
-def user_new():
-    if not g.user:
-        flask_abort(401)
-    elif g.user.role == 'lounger':
         return render_template('user_new.html')
     elif g.user.role == 'host':
         return render_template('host_new.html')
