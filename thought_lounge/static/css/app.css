@@ -24,6 +24,20 @@ body{
   font-family: Raleway;
 }
 
+.quote {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  left: 1em;
+  top: 0em;
+}
+
+.lounge-pic {
+  border-radius: 3%;
+}
+
 .sign-up {
   margin-top: 2em;
 }

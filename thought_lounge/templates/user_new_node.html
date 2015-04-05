@@ -16,40 +16,20 @@
 <div class="container top-buffer">
 	<div class="row user-info">
 		<div class="col-sm-2">
-			<script id="upload-picture-template" type="x-tmpl-mustache">
             <div class="user-pic">
-            <img class="user-pic-img" src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
-            <br>
-            </div>
-            {% raw %}
-            <form id="upload-picture-form" enctype="multipart/form-data">
+                <img class="user-pic-img" src="{{ picture_url }}" width="95%" ><br>
+                {% if picture_url==placeholder_url %}
+                <form id="upload-picture-form" enctype="multipart/form-data">
                 <input id="upload-picture-file" type="file" name="file" class="btn-block">
-            </form>
-            {% endraw %}
-            </script>
-
-            <script id="picture-template" type="x-tmpl-mustache">
-            {% raw %}
-            <img class="img-responsive image-center user-pic" src="{{ image }}">
-            {% endraw %}
-            </script>
-            
-            <script id="delete-picture-template" type="x-tmpl-mustache">
-            {% raw %}
-            <form id="delete-picture-form">
+                </form>
+                {% else %}
+                <form id="delete-picture-form">
                 <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer delete-pic">
                     Delete this picture
                 </button>
-            </form>
-            {% endraw %}
-            </script>
-
-            <div id="picture-error"></div>
-            <div id="picture"></div>
-            {% block picture_control %}
-            <div id="upload-picture"></div>
-            <div id="delete-picture"></div>
-            {% endblock %}
+                </form>
+                {% endif %}
+            </div>
 		</div>
 		<div class="col-sm-2">
 			{% block first %}
@@ -187,8 +167,7 @@
                     <a class="list-group-item" href="{{ lounge.web.href }}">
                     <div class="row">
                     <div class="col-sm-8">
-                    <p class="quote">The world is not a wish granting factory.</p>
-                    <img src="../static/img/placeholder_lounge.png" width="100%" class="lounge-pic">
+                    <img src="../static/img/placeholder_lounge.png" width="100%">
                     </div>
                     <div class="col-sm-4">
                         <strong>
