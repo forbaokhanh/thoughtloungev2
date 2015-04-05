@@ -39,18 +39,18 @@ lounges = [
     {
         'dateTime': datetime.datetime(2015, 2, 25, 3, 00).isoformat(),
         'isReserved': False,
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2015, 2, 20, 3, 00).isoformat(),
         'isReserved': False,
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2015, 2, 10, 3, 00).isoformat(),
         'isReserved': True,
         'location': 'Main Stacks B2',
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2015, 1, 1, 4, 00).isoformat(),
@@ -58,7 +58,7 @@ lounges = [
         'topic': 'lurk late. We',
         'summary': 'strike straight. We',
         'location': 'Main Stacks C3',
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2014, 12, 25, 3, 00).isoformat(),
@@ -66,7 +66,7 @@ lounges = [
         'topic': 'sing sin. We',
         'summary': 'thin gin. We',
         'location': 'Haas 2',
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2014, 12, 12, 5, 00).isoformat(),
@@ -74,7 +74,7 @@ lounges = [
         'topic': 'Jazz June. We',
         'summary': 'die soon.',
         'location': 'Haas 3',
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     },
     {
         'dateTime': datetime.datetime(2014, 11, 25, 6, 00).isoformat(),
@@ -82,7 +82,7 @@ lounges = [
         'topic': 'Knock-kneed, coughing like hags, we cursed through sludge',
         'summary': 'Bent double, like old beggars under sacks',
         'location': 'Haas 4',
-        'campus': 'UC Berkeley',
+        'community': 'UC Berkeley',
     }
 ]
 

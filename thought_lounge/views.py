@@ -1,6 +1,7 @@
 from thought_lounge import app, api, ma, db
 from thought_lounge.models import *
 from thought_lounge.mail import *
+from thought_lounge.schematic import *
 
 from flask import render_template, request, g, session, url_for, send_file, redirect
 from flask import abort as flask_abort
@@ -154,6 +155,11 @@ def authorize_role(role, soft = False):
 # 403 if user_id->user does not have specified privileges
 def authorize_role_by_id(role, user_id, soft = False):
     user = get_or_404(User, id = user_id)
+    print('authorize_role_by_id')
+    print(user)
+    print(user.role)
+    print(ROLES[user.role] >= ROLES[role])
+    print('**************')
     if not ROLES[user.role] >= ROLES[role]:
         if soft:
             return False
@@ -220,6 +226,7 @@ def put(model, data):
             try:
                 setattr(model, attribute, value)
             except AttributeError:
+                print(model, attribute)
                 pass
 
 #### Schemas and APIs ####
@@ -228,61 +235,160 @@ def validate_role(role):
     if role not in ['lounger', 'host', 'admin']:
         raise ValidationError('role attribute must be either \'lounger\', \'host\', or \'admin\'.')
 
-class UserPictureSchema(ma.Schema):
-    href = ma.URLFor('picture_ep', picture_id = '<id>')
+# class UserPictureSchema(ma.Schema):
+#     #href = ma.URLFor('picture_ep', picture_id = '<id>')
+#     #id = ma.String('picture_ep', picture_id = '<id>')
+#     image = ma.URLFor('picture_image_ep', picture_id = '<id>')
 
-class UserSchema(ma.Schema):
-    email = ma.Email(required = True)
-    firstName = ma.String(attribute = 'first_name', required = True)
-    lastName = ma.String(attribute = 'last_name')
-    bio = ma.String()
-    notifications = ma.Integer(required = True)
-    picture = ma.Nested(UserPictureSchema, default = dict())
+# class UserHostApplicationSchema(ma.Schema):
+#     application = ma.String(required = True)
+#     isApproved = ma.Boolean(attribute = 'is_approved')
 
-class PasswordedUserSchema(UserSchema):
-    password = ma.String(required = True)
+# class LinkedUserHostApplicationSchema(UserHostApplicationSchema):
+#     href = ma.URLFor('user_host_application_ep', host_application_id = '<id>', user_id = '<user.id>')
 
-class RoledUserSchema(UserSchema):
-    role = ma.String(validate = validate_role)
+# class UserHostApplicationListSchema(ma.Schema):
+#     items = ma.Nested(LinkedUserHostApplicationSchema, many = True, attribute = 'user_host_applications')
+#     href = ma.URLFor('user_host_applications_ep', user_id = '<user_id>')
 
-class LinkedUserSchema(RoledUserSchema):
-    href = ma.URLFor('user_ep', user_id = '<id>')
-    key = ma.Hyperlinks({
-        'href': ma.URLFor('key_ep', user_id = '<id>')
-    })
-    userLounges = ma.Hyperlinks({
-        'href': ma.URLFor('user_lounges_ep', user_id = '<id>')
-    })
-    hostApplications = ma.Hyperlinks({
-        'href': ma.URLFor('user_host_applications_ep', user_id = '<id>')
-    })
-    web = ma.Hyperlinks({
-        'href': ma.URLFor('host_preview', host_id = '<id>')
-    })
+# class UserSchema(ma.Schema):
+#     email = ma.Email(required = True)
+#     firstName = ma.String(attribute = 'first_name', required = True)
+#     lastName = ma.String(attribute = 'last_name')
+#     bio = ma.String()
+#     notifications = ma.Integer(required = True)
+#     picture = ma.Nested(UserPictureSchema, default = dict())
+#     role = ma.String()
+#     hostApplications = ma.Nested(UserHostApplicationSchema, default = dict())
+#     userLounges = ma.Nested(LinkedLoungeSchema, default=dict())
 
-class UserListSchema(ma.Schema):
-    items = ma.Nested(LinkedUserSchema, many = True, attribute = 'users')
-    href = ma.URLFor('users_ep')
+# class PasswordedUserSchema(UserSchema):
+#     password = ma.String(required = True)
+
+# class RoledUserSchema(UserSchema):
+#     role = ma.String(validate = validate_role)
+
+# class LinkedUserSchema(RoledUserSchema):
+#     href = ma.URLFor('user_ep', user_id = '<id>')
+#     key = ma.Hyperlinks({
+#         'href': ma.URLFor('key_ep', user_id = '<id>')
+#     })
+#     userLounges = ma.Hyperlinks({
+#         'href': ma.URLFor('user_lounges_ep', user_id = '<id>')
+#     })
+#     hostApplications = ma.Hyperlinks({
+#         'href': ma.URLFor('user_host_applications_ep', user_id = '<id>')
+#     })
+#     web = ma.Hyperlinks({
+#         'href': ma.URLFor('host_preview', host_id = '<id>')
+#     })
+#     # class Meta:
+#     #     fields = ('bio', 'email', 'firstName', 'lastName', 'role', 'notifications', 'picture')
+
+# class UserListSchema(ma.Schema):
+#     items = ma.Nested(UserSchema, many = True, attribute = 'users')
+#     href = ma.URLFor('users_ep')
+
+# class LoungePictureSchema(ma.Schema):
+#     picture = ma.Nested(PictureSchema, allow_null = True, default = dict(), required = True)
+
+# class LinkedLoungePictureSchema(LoungePictureSchema):
+#     href = ma.URLFor('lounge_picture_ep', picture_id = '<id>', lounge_id = '<lounge_id>')
+
+# class LoungePictureListSchema(ma.Schema):
+#     items = ma.Nested(LinkedLoungePictureSchema, many = True, attribute = 'lounge_pictures')
+#     href = ma.URLFor('lounge_pictures_ep', lounge_id = '<lounge_id>')
+
+# class UserSignInSchema(ma.Schema):
+#     email = ma.String(required = True)
+#     password = ma.String(required = True)
+
+# class KeySchema(ma.Schema):
+#     key = ma.String(required = True)
+#     href = ma.URLFor('key_ep', user_id = '<user.id>')
+
+# class PictureSchema(ma.Schema):
+#     # href = ma.URLFor('picture_ep', picture_id = '<id>')
+#     image = ma.URLFor('picture_image_ep', picture_id = '<id>')
+#     #image = ma.String('picture_image_ep', picture_id='<id>')
+
+# class PictureListSchema(ma.Schema):
+#     items = ma.Nested(PictureSchema, many = True, attribute = 'pictures')
+#     href = ma.URLFor('pictures_ep')
+
+# class LoungeSchema(ma.Schema):
+#     dateTime = ma.DateTime(attribute = 'date_time', required = True)
+#     location = ma.String()
+#     campus = ma.String()
+#     isReserved = ma.Boolean(attribute = 'is_reserved', required = True)
+#     topic = ma.String()
+#     summary = ma.String()
+#     loungeUsers = ma.Nested()
+
+# class LinkedLoungeSchema(LoungeSchema):
+#     href = ma.URLFor('lounge_ep', lounge_id = '<id>')
+#     loungeUsers = ma.Hyperlinks({
+#         'href': ma.URLFor('lounge_users_ep', lounge_id = '<id>')
+#     })
+#     pictures = ma.Hyperlinks({
+#         'href': ma.URLFor('lounge_pictures_ep', lounge_id = '<id>')
+#     })
+#     web = ma.Hyperlinks({
+#         'href': ma.URLFor('log', lounge_id = '<id>')
+#     })
+
+# class LoungeListSchema(ma.Schema):
+#     items = ma.Nested(LinkedLoungeSchema, many = True, attribute = 'lounges')
+#     href = ma.URLFor('lounges_ep')
+
+# class UserLoungeBaseSchema(ma.Schema):
+#     topic = ma.String()
+#     summary = ma.String()
+#     showedUp = ma.Boolean(attribute = 'showed_up')
+#     isHost = ma.Boolean(attribute = 'is_host', required = True)
+
+# class UserLoungeSchema(UserLoungeBaseSchema):
+#     lounge = ma.Hyperlinks({
+#         'href': ma.URLFor('lounge_ep', lounge_id = '<lounge_id>')
+#     }, required = True)
+
+# class LinkedUserLoungeSchema(UserLoungeSchema):
+#     href = ma.URLFor('user_lounge_ep', user_id = '<user_id>', lounge_id = '<lounge_id>')
+
+# class UserLoungeListSchema(ma.Schema):
+#     items = ma.Nested(LinkedUserLoungeSchema, many = True, attribute = 'user_lounges')
+#     href = ma.URLFor('user_lounges_ep', user_id = '<user_id>')
+
+# ### Expanded Schemas ###
+# # (sometimes reference later schemas)
+# # How to expand a list?
+# class LinkedLoungeUserSchemaExpanded(LinkedLoungeUserSchema):
+#     user = ma.Nested(LinkedUserSchema)
+
+# class LoungeUserListSchemaExpanded(LoungeUserListSchema):
+#     items = ma.Nested(LinkedLoungeUserSchemaExpanded, many = True, attribute = 'lounge_users')
+
+row2dict = lambda row: dict((col, getattr(row, col)) for col in row.__table__.columns.keys())
 
 class UserAPI(Resource):
     def get(self, user_id):
         user = get_or_404(User, id = user_id)
-        return LinkedUserSchema().dump(user).data
+        #return UserSchema().dump(user).data
+        return row2dict(user)
 
     def put(self, user_id):
         user = authorize(user_id)
-
         payload = request.get_json()
-
         schema = UserSchema
         if 'role' in payload and authorize_role('admin', soft = True):
             schema = RoledUserSchema
 
         picture_data = payload.pop('picture', None)
-        user_data = schema_cycle(schema, payload)
+        #user_data = schema_cycle(schema, payload)
+        put(user, payload)
+        #setattr(user, 'role', payload['role'])
 
-        put(user, user_data)
-
+        print(row2dict(user))
         if picture_data and 'href' in picture_data:
             mapping = url_map('picture_ep', picture_data['href'])
             user.picture = get_or_404(Picture, id = mapping['picture_id'])
@@ -308,7 +414,6 @@ class UserListAPI(Resource):
         if role:
             roles = role.split(',')
             users = users.filter(User.role.in_(roles))
-
         if require:
             # Return only users that have attributes that are lists with at least one element
             # example, if require = 'host-applications', only return users with at least one host application
@@ -322,43 +427,48 @@ class UserListAPI(Resource):
         else:
             users = users.all()
 
-        users = {'users': users}
-        return UserListSchema().dump(users).data
+        #print(row2dict(users[0]))
+        tmp = [row2dict(user) for user in users]
+        users = {'users': tmp}
+        return users
+        #return UserListSchema().dump(users).data
 
     def post(self):
-        user_data = load_payload(PasswordedUserSchema, request.get_json())
-        picture_data = user_data.pop('picture', None)
-        user = User(**user_data)
-
+        #user_data = load_payload(PasswordedUserSchema, request.get_json())
+        user_data = request.get_json()
+        print(user_data)
+        user = User(email = user_data['email'], password = user_data['password'], bio = user_data['bio'], notifications = user_data['notifications'], first_name = user_data['firstName'], last_name = user_data['lastName'])
         none_or_409(User, 'DUPLICATE_EMAIL', email = user.email)
+        user.picture = get_or_404(Picture, id = user_data['picture'])
+        picture_data = user_data.pop('picture', None)
 
-        if picture_data is not None and 'href' in picture_data:
-            mapping = url_map('picture_ep', picture_data['href'])
-            user.picture = get_or_404(Picture, id = mapping['picture_id'])
-        else:
-            user.picture = None
+
+        # if picture_data is not None:
+        #     #mapping = url_map('picture_ep', picture_data['href'])
+        #     pass
+        # else:
+        #     user.picture = None
 
         db.session.add(user)
         db.session.commit()
-
-        send_welcome_mail(user)
+        session['user_id'] = user.id
+        print(user)
+        #send_welcome_mail(user)
 
         # Signing user in
-        session['user_id'] = user.id
 
-        return LinkedUserSchema().dump(user).data, 201
+
+        return row2dict(user)#{'user' : row2dict(user)}
+        #return LinkedUserSchema().dump(user).data, 201
 
 api.add_resource(UserAPI, '/api/users/<int:user_id>/', endpoint = 'user_ep')
 api.add_resource(UserListAPI, '/api/users/', endpoint = 'users_ep')
 
-class UserSignInSchema(ma.Schema):
-    email = ma.String(required = True)
-    password = ma.String(required = True)
-
 class UserSignInAPI(Resource):
     def get(self):
         if g.user:
-            return LinkedUserSchema().dump(g.user).data
+            #return UserSchema().dump(g.user).data
+            return row2dict(g.user)
         else:
             return {}, 204
 
@@ -373,6 +483,7 @@ class UserSignInAPI(Resource):
         session['user_id'] = user.id
 
         return LinkedUserSchema().dump(user).data
+        #return row2dict(user)
 
 class UserSignOutAPI(Resource):
     def post(self):
@@ -381,10 +492,6 @@ class UserSignOutAPI(Resource):
 
 api.add_resource(UserSignInAPI, '/api/auth/sign_in/', endpoint = 'user_sign_in_ep')
 api.add_resource(UserSignOutAPI, '/api/auth/sign_out/', endpoint = 'user_sign_out_ep')
-
-class KeySchema(ma.Schema):
-    key = ma.String(required = True)
-    href = ma.URLFor('key_ep', user_id = '<user.id>')
 
 class KeyAPI(Resource):
     def get(self, user_id):
@@ -396,6 +503,7 @@ class KeyAPI(Resource):
 
         key = user.key
         return KeySchema().dump(key).data
+        #return {'key' : str(key) }
 
     def post(self, user_id):
         user = authorize(user_id)
@@ -404,16 +512,9 @@ class KeyAPI(Resource):
         db.session.commit()
 
         return KeySchema().dump(user.key), 201
+        #return {'key': str(user.key)}, 201
 
 api.add_resource(KeyAPI, '/api/users/<int:user_id>/key/', endpoint = 'key_ep')
-
-class PictureSchema(ma.Schema):
-    href = ma.URLFor('picture_ep', picture_id = '<id>')
-    image = ma.URLFor('picture_image_ep', picture_id = '<id>')
-
-class PictureListSchema(ma.Schema):
-    items = ma.Nested(PictureSchema, many = True, attribute = 'pictures')
-    href = ma.URLFor('pictures_ep')
 
 def file_extension(filename):
     return filename.rsplit('.')[1]
@@ -424,12 +525,14 @@ def allowed_file(filename):
 class PictureAPI(Resource):
     def get(self, picture_id):
         picture = get_or_404(Picture, id = picture_id)
-        return PictureSchema().dump(picture).data
+        #return PictureSchema().dump(picture).data
+        return row2dict(picture)
 
 class PictureListAPI(Resource):
     def get(self):
         pictures = {'pictures': Picture.query.all()}
-        return PictureListSchema().dump(pictures).data
+        #return PictureListSchema().dump(pictures).data
+        return [row2dict(picture) for picture in pictures['pictures']]
 
     def post(self):
         file = request.files['file']
@@ -448,7 +551,8 @@ class PictureListAPI(Resource):
         else:
             abort(400, message = 'Picture must exist.')
 
-        return PictureSchema().dump(picture).data, 201
+        #return PictureSchema().dump(picture).data, 201
+        return row2dict(picture), 201
 
 class PictureImageAPI(Resource):
     def get(self, picture_id):
@@ -460,34 +564,13 @@ api.add_resource(PictureAPI, '/api/pictures/<int:picture_id>/', endpoint = 'pict
 api.add_resource(PictureListAPI, '/api/pictures/', endpoint = 'pictures_ep')
 api.add_resource(PictureImageAPI, '/api/pictures/cdn/<int:picture_id>/', endpoint = 'picture_image_ep')
 
-class LoungeSchema(ma.Schema):
-    dateTime = ma.DateTime(attribute = 'date_time', required = True)
-    location = ma.String()
-    campus = ma.String()
-    isReserved = ma.Boolean(attribute = 'is_reserved', required = True)
-    topic = ma.String()
-    summary = ma.String()
-
-class LinkedLoungeSchema(LoungeSchema):
-    href = ma.URLFor('lounge_ep', lounge_id = '<id>')
-    loungeUsers = ma.Hyperlinks({
-        'href': ma.URLFor('lounge_users_ep', lounge_id = '<id>')
-    })
-    pictures = ma.Hyperlinks({
-        'href': ma.URLFor('lounge_pictures_ep', lounge_id = '<id>')
-    })
-    web = ma.Hyperlinks({
-        'href': ma.URLFor('log', lounge_id = '<id>')
-    })
-
-class LoungeListSchema(ma.Schema):
-    items = ma.Nested(LinkedLoungeSchema, many = True, attribute = 'lounges')
-    href = ma.URLFor('lounges_ep')
-
 class LoungeAPI(Resource):
     def get(self, lounge_id):
         lounge = get_or_404(Lounge, id = lounge_id)
-        return LinkedLoungeSchema().dump(lounge).data
+        #return LoungeSchema().dump(lounge).data
+        tmp = row2dict(lounge)
+        tmp['date_time'] = str(tmp['date_time'])
+        return tmp
 
     def put(self, lounge_id):
         lounge = get_or_404(Lounge, id = lounge_id)
@@ -531,37 +614,39 @@ class LoungeListAPI(Resource):
             lounges = lounges[:limit]
 
         lounges = {'lounges': lounges}
-        return LoungeListSchema().dump(lounges).data
+        tmp = [row2dict(lounge) for lounge in lounges['lounges']]
+        for dictionary in tmp:
+            dictionary['date_time'] = str(dictionary['date_time'])
+        #return LoungeListSchema().dump(lounges).data
+        return {'lounges': tmp}
 
     def post(self):
         user = authorize_role('host')
 
         lounge_data = load_payload(LoungeSchema, request.get_json())
+        #lounge_data = request.get_json()
+        #lounge = Lounge(is_reserved=lounge_data['isReserved'], date_time=lounge_data['date_time'], community=lounge_data['community'], id=lounge_data['id'], )
+        print(lounge_data)
         lounge = Lounge(**lounge_data)
-
         db.session.add(lounge)
 
         # The user who creates a lounge is the host
         user_lounge = UserLounge(is_host = True)
         user.user_lounges.append(user_lounge)
         user_lounge.lounge = lounge
+        #db.session.add(user_lounge)
 
         db.session.commit()
 
-        return LinkedLoungeSchema().dump(lounge).data, 201
+        #print(LinkedLoungeSchema().dump(lounge).data, 201)
+        tmp = row2dict(lounge)
+        tmp['date_time'] = str(tmp['date_time'])
+        print(tmp)
+        #return LoungeListSchema().dump(lounges).data
+        return tmp, 201
 
 api.add_resource(LoungeAPI, '/api/lounges/<int:lounge_id>/', endpoint = 'lounge_ep')
 api.add_resource(LoungeListAPI, '/api/lounges/', endpoint = 'lounges_ep')
-
-class LoungePictureSchema(ma.Schema):
-    picture = ma.Nested(PictureSchema, allow_null = True, default = dict(), required = True)
-
-class LinkedLoungePictureSchema(LoungePictureSchema):
-    href = ma.URLFor('lounge_picture_ep', picture_id = '<id>', lounge_id = '<lounge_id>')
-
-class LoungePictureListSchema(ma.Schema):
-    items = ma.Nested(LinkedLoungePictureSchema, many = True, attribute = 'lounge_pictures')
-    href = ma.URLFor('lounge_pictures_ep', lounge_id = '<lounge_id>')
 
 class LoungePictureAPI(Resource):
     def get(self, lounge_id, picture_id):
@@ -571,7 +656,8 @@ class LoungePictureAPI(Resource):
             'id': lounge_picture.id,
             'picture': lounge_picture
         }
-        return LinkedLoungePictureSchema().dump(data).data
+        #return LinkedLoungePictureSchema().dump(data).data
+        return data
 
     def delete(self, lounge_id, picture_id):
         lounge = get_or_404(Lounge, id = lounge_id)
@@ -589,10 +675,12 @@ class LoungePictureListAPI(Resource):
             'lounge_pictures': [{'lounge_id': lounge_picture.lounge_id, 'id': lounge_picture.id, 'picture': lounge_picture} for lounge_picture in lounge.pictures.all()],
             'lounge_id': lounge.id
         }
-        return LoungePictureListSchema().dump(lounge_pictures).data
-
+        #return LoungePictureListSchema().dump(lounge_pictures).data
+        return lounge_pictures
     def post(self, lounge_id):
+        print(lounge_id)
         lounge = get_or_404(Lounge, id = lounge_id)
+        print(lounge)
         authorize_lounge(lounge)
 
         lounge_picture_data = load_payload(LoungePictureSchema, request.get_json())
@@ -613,33 +701,17 @@ class LoungePictureListAPI(Resource):
             'id': lounge_picture.id,
             'picture': lounge_picture
         }
-        return LinkedLoungePictureSchema().dump(data).data
+        #return LinkedLoungePictureSchema().dump(data).data
+        return data
 
 api.add_resource(LoungePictureAPI, '/api/lounges/<int:lounge_id>/pictures/<int:picture_id>/', endpoint = 'lounge_picture_ep')
 api.add_resource(LoungePictureListAPI, '/api/lounges/<int:lounge_id>/pictures/', endpoint = 'lounge_pictures_ep')
 
-class UserLoungeBaseSchema(ma.Schema):
-    topic = ma.String()
-    summary = ma.String()
-    showedUp = ma.Boolean(attribute = 'showed_up')
-    isHost = ma.Boolean(attribute = 'is_host', required = True)
-
-class UserLoungeSchema(UserLoungeBaseSchema):
-    lounge = ma.Hyperlinks({
-        'href': ma.URLFor('lounge_ep', lounge_id = '<lounge_id>')
-    }, required = True)
-
-class LinkedUserLoungeSchema(UserLoungeSchema):
-    href = ma.URLFor('user_lounge_ep', user_id = '<user_id>', lounge_id = '<lounge_id>')
-
-class UserLoungeListSchema(ma.Schema):
-    items = ma.Nested(LinkedUserLoungeSchema, many = True, attribute = 'user_lounges')
-    href = ma.URLFor('user_lounges_ep', user_id = '<user_id>')
-
 class UserLoungeAPI(Resource):
     def get(self, user_id, lounge_id):
         user_lounge = get_or_404(UserLounge, user_id = user_id, lounge_id = lounge_id)
-        return LinkedUserLoungeSchema().dump(user_lounge).data
+        return row2dict(user_lounge)
+        #return LinkedUserLoungeSchema().dump(user_lounge).data
 
     def put(self, user_id, lounge_id):
         authorize(user_id)
@@ -689,18 +761,29 @@ class UserLoungeListAPI(Resource):
         elif time == 'past':
             now = datetime.datetime.now()
             user_lounges = [user_lounge for user_lounge in user_lounges if user_lounge.lounge.date_time <= now]
+        print(user_lounges)
+        tmp = [row2dict(user_lounge) for user_lounge in user_lounges]
+
+        for dictionary in tmp:
+            dictionary['lounge']['date_time'] = str(dictionary['date_time'])
+            dictionary['user_id'] = user_id
 
         user_lounges = {
-            'user_lounges': user_lounges,
+            'user_lounges': tmp,
             'user_id': user_id
         }
-        return UserLoungeListSchema().dump(user_lounges).data
+
+        return user_lounges
+        #return UserLoungeListSchema().dump(user_lounges).data
+
 
     def post(self, user_id):
         user = authorize(user_id)
 
         user_lounge_data = load_payload(UserLoungeSchema, request.get_json())
+        print(user_lounge_data)
         lounge_data = user_lounge_data.pop('lounge')
+        print(lounge_data)
 
         # No autoflush is required for querying the database (getting the lounge) before the user_lounge is populated with user and lounge (since they're primary keys).
         with db.session.no_autoflush:
@@ -721,23 +804,11 @@ class UserLoungeListAPI(Resource):
             user_lounge.lounge = lounge
 
         db.session.commit()
-
-        return LinkedUserLoungeSchema().dump(user_lounge).data, 201
+        return self.get(user_id)
+        #return LinkedUserLoungeSchema().dump(user_lounge).data, 201
 
 api.add_resource(UserLoungeAPI, '/api/users/<int:user_id>/lounges/<int:lounge_id>/', endpoint = 'user_lounge_ep')
 api.add_resource(UserLoungeListAPI, '/api/users/<int:user_id>/lounges/', endpoint = 'user_lounges_ep')
-
-class LoungeUserSchema(UserLoungeBaseSchema):
-    user = ma.Hyperlinks({
-        'href': ma.URLFor('user_ep', user_id = '<user_id>')
-    }, required = True)
-
-class LinkedLoungeUserSchema(LoungeUserSchema):
-    href = ma.URLFor('lounge_user_ep', user_id = '<user_id>', lounge_id = '<lounge_id>')
-
-class LoungeUserListSchema(ma.Schema):
-    items = ma.Nested(LinkedLoungeUserSchema, many = True, attribute = 'lounge_users')
-    href = ma.URLFor('lounge_users_ep', lounge_id = '<lounge_id>')
 
 class LoungeUserAPI(Resource):
     def get(self, lounge_id, user_id):
@@ -749,7 +820,8 @@ class LoungeUserAPI(Resource):
         else:
             schema = LinkedLoungeUserSchema
 
-        return schema().dump(lounge_user).data
+        return row2dict(lounge_user)
+        #return schema().dump(lounge_user).data
 
     def put(self, lounge_id, user_id):
         lounge_user = get_or_404(UserLounge, user_id = user_id, lounge_id = lounge_id)
@@ -784,6 +856,7 @@ class LoungeUserAPI(Resource):
 class LoungeUserListAPI(Resource):
     def get(self, lounge_id):
         lounge = get_or_404(Lounge, id = lounge_id)
+        print('nigga nigganiga nigai nigangai')
 
         type = request.args.get('type')
         expand = request.args.get('expand')
@@ -801,12 +874,14 @@ class LoungeUserListAPI(Resource):
         else:
             schema = LoungeUserListSchema
 
+        tmp = [row2dict(lounge_user) for lounge_user in lounge_users]
+
         lounge_users = {
-            'lounge_users': lounge_users,
+            'lounge_users': tmp,
             'lounge_id': lounge.id
         }
-
-        return schema().dump(lounge_users).data
+        return lounge_users
+        #return schema().dump(lounge_users).data
 
     def post(self, lounge_id):
         lounge = get_or_404(Lounge, id = lounge_id)
@@ -820,9 +895,8 @@ class LoungeUserListAPI(Resource):
             lounge_user = UserLounge(**lounge_user_data)
 
             lounge_user.lounge = lounge
-
-            mapping = url_map('user_ep', user_data['href'])
-            user = get_or_404(User, id = mapping['user_id'])
+            #mapping = url_map('user_ep', user_data['href'])
+            user = get_or_404(User, id = user_data['id'])
 
             # Only one user can be a host for a specific lounge
             if lounge_user.is_host:
@@ -836,27 +910,17 @@ class LoungeUserListAPI(Resource):
             user.user_lounges.append(lounge_user)
 
         db.session.commit()
-
-        return LinkedLoungeUserSchema().dump(lounge_user).data, 201
+        return row2dict(lounge_user)
+        #return LinkedLoungeUserSchema().dump(lounge_user).data, 201
 
 api.add_resource(LoungeUserAPI, '/api/lounges/<int:lounge_id>/users/<int:user_id>/', endpoint = 'lounge_user_ep')
 api.add_resource(LoungeUserListAPI, '/api/lounges/<int:lounge_id>/users/', endpoint = 'lounge_users_ep')
 
-class UserHostApplicationSchema(ma.Schema):
-    application = ma.String(required = True)
-    isApproved = ma.Boolean(attribute = 'is_approved')
-
-class LinkedUserHostApplicationSchema(UserHostApplicationSchema):
-    href = ma.URLFor('user_host_application_ep', host_application_id = '<id>', user_id = '<user.id>')
-
-class UserHostApplicationListSchema(ma.Schema):
-    items = ma.Nested(LinkedUserHostApplicationSchema, many = True, attribute = 'user_host_applications')
-    href = ma.URLFor('user_host_applications_ep', user_id = '<user_id>')
-
 class UserHostApplicationAPI(Resource):
     def get(self, user_id, host_application_id):
         user_host_application = get_or_404(HostApplication, id = host_application_id, user_id = user_id)
-        return LinkedUserHostApplicationSchema().dump(user_host_application).data
+        #return LinkedUserHostApplicationSchema().dump(user_host_application).data
+        return user_host_application
 
     def put(self, user_id, host_application_id):
         user = authorize_role('admin')
@@ -886,7 +950,8 @@ class UserHostApplicationListAPI(Resource):
             'user_host_applications': user.host_applications.all(),
             'user_id': user.id
         }
-        return UserHostApplicationListSchema().dump(user_host_applications).data
+        #return UserHostApplicationListSchema().dump(user_host_applications).data
+        return user_host_applications
 
     def post(self, user_id):
         user = authorize(user_id)
@@ -900,17 +965,62 @@ class UserHostApplicationListAPI(Resource):
         host_application = HostApplication(**user_host_application_data)
         user.host_applications.append(host_application)
         db.session.commit()
-
-        return LinkedUserHostApplicationSchema().dump(host_application).data, 201
+        return row2dict(host_application)
+        #return LinkedUserHostApplicationSchema().dump(host_application).data, 201
 
 api.add_resource(UserHostApplicationAPI, '/api/users/<int:user_id>/host_applications/<int:host_application_id>/', endpoint = 'user_host_application_ep')
 api.add_resource(UserHostApplicationListAPI, '/api/users/<int:user_id>/host_applications/', endpoint = 'user_host_applications_ep')
 
-### Expanded Schemas ###
-# (sometimes reference later schemas)
-# How to expand a list?
-class LinkedLoungeUserSchemaExpanded(LinkedLoungeUserSchema):
-    user = ma.Nested(LinkedUserSchema)
+"""
+Forgot Password Flow:
+1. Send email address to first endpoint
+2. That endpoint checks if user exists. If they do, it sends an email to the provided address with a verification code, and
+   it stores that verification code in the database, associated with the current user.
+3. The verification code and the user email are sent to another endpoint, which ensures the one entered is the same one 
+   that was sent and associated with user. 
+4. If the codes match, make another endpoint where they send in their new password, and you update it in the database. 
+"""
 
-class LoungeUserListSchemaExpanded(LoungeUserListSchema):
-    items = ma.Nested(LinkedLoungeUserSchemaExpanded, many = True, attribute = 'lounge_users')
+# class SendForgotPasswordEmail(Resource):
+#     def post(self, email):
+#         user = get_or_404(User, email = email)
+#         user.verification_code = generateCode(user)
+#         db.session.commit()
+#         mail.send(mail.Message('This is your code to reset your account' + user.verification_code))
+
+# class CheckVerificationCode(Resource):
+#     def post(self, email, code):
+#         user = get_or_404(User, email = email)
+#         if user.verification_code and user.verification_code == code:
+#             return True
+#         else:
+#             abort(403, "Incorrect Code.")
+
+# class ChangePassword(Resource):
+#     def post(self, email, password):
+#         user = get_or_404(User, email = email)
+#         user.password = password
+#         db.session.commit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

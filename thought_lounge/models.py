@@ -37,6 +37,8 @@ class User(db.Model):
 
     user_lounges = db.relationship('UserLounge', backref = 'user')
 
+    #verification_code = db.Column(db.Integer, unique = True, server_default = None)
+
     host_applications = db.relationship('HostApplication', backref = 'user', lazy = 'dynamic', cascade = 'all, delete-orphan')
 
     key_id = db.Column(db.Integer, db.ForeignKey('key.id'))
@@ -88,8 +90,8 @@ class Lounge(db.Model):
     date_time = db.Column(db.DateTime, nullable = False)
 
     location = db.Column(db.String)
-    campus = db.Column(db.String)
-
+    campus = db.Column(db.String) #CHANGE
+    community = db.Column(db.String)
     is_reserved = db.Column(db.Boolean, nullable = False)
 
     topic = db.Column(db.String)
@@ -112,10 +114,10 @@ class Lounge(db.Model):
     def formatted_local_date_time(self):
         return self.local_date_time.strftime('%A, %d %B at %I:%M %p')
 
-    def __init__(self, date_time, is_reserved, location = None, campus = None, topic = None, summary = None):
+    def __init__(self, date_time, is_reserved, location = None, community = None, topic = None, summary = None):
         self.date_time = date_time
         self.location = location
-        self.campus = campus
+        self.community = community
         self.is_reserved = is_reserved
         self.topic = topic
         self.summary = summary
