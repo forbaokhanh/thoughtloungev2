@@ -1,0 +1,289 @@
+{% extends "user_new.html" %}
+
+{% block host %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="text-subtitle">
+            Log Hosted Lounges
+            <small>click on a lounge to log it</small>
+        </h4>
+    </div>
+<div id="hostedLounges"></div>
+    <script id="hostedLoungesTemplate" type="x-tmpl-mustache">
+    {% raw %}
+    {{#items}}
+        <a class="list-group-item hostedLounge" id="{{ lounge.href }}" href="#">
+            <strong>
+                <small>
+                    {{ lounge.dateTime }} 
+                    at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                </small>
+            </strong>
+        </a>
+    {{/items}}
+    {{^items.length}}
+        <a class="list-group-item" href="#">
+            <strong>
+                Nothing here yet.
+            </strong>
+        </a>
+    {{/items.length}}
+    {% endraw %}
+    </script>
+</div>
+{% endblock %}
+
+
+{% block first %}
+<a id="hostLoungeAnchor" href="#">
+<button type="#" class="btn btn-primary btn btn-block top-buffer userInfo">
+    Host
+</button>
+</a>
+{% endblock %}
+
+{% block hostmodals %}
+<div class="modal fade" id="hostLoungeModal" tabindex="-1" role="dialog" aria-labelledby="hostLoungeModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Host a lounge</h4>
+            </div>
+            <form class="form-horizontal" id="hostLoungeForm">
+            <div class="modal-body">
+                <div id="hostLoungeError">
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Date</label>
+                    <div class="col-sm-6">
+                        <input type="date" class="form-control" name="date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Time</label>
+                    <div class="col-sm-6">
+                        <input type="time" class="form-control" name="time" required>
+                    </div>
+                </div>
+                <div class="form-group no-margin-bottom">
+                    <label class="col-sm-3 control-label">
+                        Location
+                        <br>
+                        <small class="text-muted">
+                            (optional)
+                        </small>
+                    </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="location" placeholder="Main Stacks C3">
+                    </div>
+                </div>
+                <div class="form-group checkbox-form-group">
+                    <div class="col-sm-offset-3 col-sm-6">
+                        <div class="checkbox">
+                            <label> 
+                                <input type="checkbox" name="isReserved">
+                                Is this room reserved? 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        Campus 
+                        <br>
+                        <small class="text-muted">
+                            (optional)
+                        </small>
+                    </label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="campus" placeholder="UC Berkeley">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="hostLoungeFormBtn" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="logLoungeModal" tabindex="-1" role="dialog" aria-labelledby="logLoungeModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <script id="logUserLoungesTemplate" type="x-tmpl-mustache">
+            {% raw %}
+            <form class="form-horizontal" id="logLoungeForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Log a lounge</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="logLounge" data-log-lounge-href="{{ href }}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Date</label>
+                            <div class="col-sm-4">
+                                <input type="date" class="form-control" name="date" value="{{ date }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Time</label>
+                            <div class="col-sm-4">
+                                <input type="time" class="form-control" name="time" value="{{ time }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group no-margin-bottom">
+                            <label class="col-sm-2 control-label">
+                                Location
+                                <br>
+                                <small class="text-muted">
+                                    (optional)
+                                </small>
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="location" placeholder="Main Stacks C3" value="{{ location }}">
+                            </div>
+                        </div>
+                        <div class="form-group checkbox-form-group">
+                            <div class="col-sm-offset-2 col-sm-4">
+                                <div class="checkbox">
+                                    <label> 
+                                        <input type="checkbox" name="isReserved" {{ reservedChecked }}>
+                                        Is this room reserved? 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Campus 
+                                <br>
+                                <small class="text-muted">
+                                    (optional)
+                                </small>
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="campus" placeholder="UC Berkeley" value="{{ campus }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Topics
+                                <br>
+                                <small class="text-muted">
+                                    (max 80 char.)
+                                </small>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="topic" placeholder="Identity, Synesthesia, Resilience, Antiscience" value="{{ topic }}"
+                                    maxlength="80">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Quote
+                                <br>
+                                <small class="text-muted">
+                                    (max 100 char.)
+                                </small>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="summary" value="{{ summary }}" 
+                                    placeholder="'Is it possible to just be who you are all the time?'" maxlength="100">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Upload pictures
+                            </label>
+                            <div class="col-sm-9">
+                                <input id="upload-lounge-pictures-files" name="file[]" type="file" class="form-control" multiple>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label id="lounge-picture-error" class="col-sm-offset-2 control-label"></label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">
+                                Pictures
+                            </label>
+                            <div class="col-sm-9">
+                                {{#pictures.items}}
+                                    <div class="col-sm-2" data-lounge-picture-href="{{ href }}">
+                                        <img src="{{picture.image}}" width="100%"></img>
+                                        <br>
+                                        <button type="button" class="btn btn-sm btn-danger btn-block delete-picture-btn">Delete</button>
+                                    </div>
+                                {{/pictures.items}}
+                                {{^pictures.items.length}}
+                                    <label class="control-label">
+                                        (nothing here yet)
+                                    </label>
+                                {{/pictures.items.length}}
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {{#loungeUsers.items}}
+                    <div class="logLoungeUser {{ hostedClass }}" data-log-lounge-user-href="{{ href }}" data-log-user-href="{{ user.href }}">
+                        <div class="form-group">
+                            <label class="col-sm-offset-2 control-label label-header">
+                                {{ user.firstName }} {{ user.lastName }}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Topic
+                                <br>
+                                <small class="text-muted">
+                                    (max 30 char.)
+                                </small>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="topic" value="{{ topic }}"
+                                    maxlength="30" placeholder="Identity">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Summary</label>
+                            <div class="col-sm-9">
+                                <textarea rows="5" class="form-control" name="summary">{{ summary }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group checkbox-form-group">
+                            <div class="col-sm-offset-2 col-sm-4">
+                                <div class="checkbox">
+                                    <label> 
+                                        <input type="checkbox" name="showedUp" {{ showedUpChecked }}>
+                                        Did this lounger show up?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/loungeUsers.items}}
+                    <div id="logLoungeError"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="logLoungeDeleteFormBtn" type="submit" class="btn btn-danger" onClick="globals.logLoungeAction = 'delete'">
+                        Delete this lounge
+                    </button>
+                    <button id="logLoungeFormBtn" type="submit" class="btn btn-primary" onClick="globals.logLoungeAction = 'submit'">
+                        Submit
+                    </button>
+                </div>
+            </form>
+            {% endraw %}
+            </script>
+            <div id="logUserLoungesModalContent"></div>
+        </div>
+    </div>
+</div>
+{% block adminmodals %}
+{% endblock %}
+{% endblock %}
+
+{% block hostjs %}
+<script src="{{ url_for('static', filename = 'js/host.js') }}"></script>
+{% block adminjs %}
+{% endblock %}
+{% endblock %}

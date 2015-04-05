@@ -41,6 +41,7 @@ for index, user_data in enumerate(users):
         'href': picture_reps[index]['href']
     }
     rv = requests.post(prefix + '/api/users/', data = json.dumps(user_data), headers = headers)
+    print(json.dumps(user_data))
     user_reps.append(rv.json())
 print(user_reps)
 

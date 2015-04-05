@@ -29,11 +29,12 @@ def user():
     if not g.user:
         flask_abort(401)
     elif g.user.role == 'lounger':
-        return render_template('user.html')
+        return render_template('user_new.html')
     elif g.user.role == 'host':
-        return render_template('host.html')
+        return render_template('host_new.html')
     elif g.user.role == 'admin':
-        return render_template('admin.html')
+        return render_template('admin_new.html')
+
 
 @app.route('/user/<int:host_id>/')
 def host_preview(host_id):
@@ -80,11 +81,11 @@ def not_authorized(e):
 def not_found(e):
     return render_template('404.html'), 404
 
-@app.errorhandler(500)
-def internal_server_error(e):
-    # Doesn't work.
-    send_error_mail()
-    return render_template('500.html'), 500
+# @app.errorhandler(500)
+# def internal_server_error(e):
+#     # Doesn't work.
+#     send_error_mail()
+#     return render_template('500.html'), 500
 
 ###########################
 ####### RESTful API #######
@@ -341,7 +342,7 @@ class UserListAPI(Resource):
         db.session.add(user)
         db.session.commit()
 
-        send_welcome_mail(user)
+        # send_welcome_mail(user)
 
         # Signing user in
         session['user_id'] = user.id

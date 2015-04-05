@@ -29,8 +29,10 @@ function loadWelcomeMessage() {
 }
 
 function loadBio() {
+    console.log('loading bio');
     var user = loadUserOrPreview();
     user.originalBio = user.bio;
+    console.log(user.originalBio);
     user.bio = user.originalBio.split('\n');
     var template = $('#bioTemplate').html();
     var rendered = Mustache.render(template, user);
@@ -173,9 +175,7 @@ $('#upload-picture').on('submit', '#upload-picture-form', function(event) {
     event.preventDefault();
     
     var user = loadUserOrPreview();
-
     var data = new FormData($('#upload-picture-form')[0]);
-
     $.ajax({
         type: 'POST',
         url: '/api/pictures/',

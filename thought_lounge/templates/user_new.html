@@ -10,68 +10,15 @@
     var hostHref = "{{ hostHref or ''}}";
 </script>
 
+<div class="container-fluid background-pic" >
+</div>
+
 <div class="container top-buffer">
-    <div class="row">
-        <!-- Sign Up for a TL Button -->
-            <div class="text-center sign-up-button">
-                <button type="#" class="btn btn-lg btn-default register-button" style="
-                color: #2196f3;
-                ">Sign Up for a Thought Lounge</button>
-            </div>
-
-    </div>
-
-    <div class="row">
-
-        <!-- Previous Lounges -->
-        <div class="col-sm-4 prev-lounges">
-            <div class="panel panel-default user-lounge-display">
-                <div class="panel-heading">
-                    <h4 class="text-subtitle"> 
-                        {% block your_previous_lounges %}
-                        Your
-                        {% endblock %}
-                        Previous Lounges
-                    </h4>
-                </div>
-            <script id="userLoungesTemplate" type="x-tmpl-mustache">
-            {% raw %}
-            {{#items}}
-                <a class="list-group-item" href="{{ lounge.web.href }}">
-                    <strong>
-                        <small>
-                            {{ lounge.dateTime }}
-                        </small>
-                    </strong>
-                    <br>
-                    <strong>
-                        {{ topic }}
-                    </strong>
-                    <br>
-                    <small>
-                        {{ summary }}
-                    </small>
-                </a>
-            {{/items}}
-            {{^items.length}}
-                <a class="list-group-item" href="#">
-                    <strong>
-                        Nothing here yet.
-                    </strong>
-                </a>
-            {{/items.length}}
-            {% endraw %}
-            </script>
-            <div id="userLounges"></div>
-            </div>
-        </div>
-
-        <!-- User Information -->
-        <div class="col-sm-4">  
-
-            <script id="upload-picture-template" type="x-tmpl-mustache">
-            <div class="placeholder-pic">
-            <img src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="50%" >
+	<div class="row user-info">
+		<div class="col-sm-2">
+			<script id="upload-picture-template" type="x-tmpl-mustache">
+            <div class="user-pic">
+            <img class="user-pic-img" src="{{ url_for('static', filename = 'img/profile_image_placeholder.jpg') }}" width="95%" >
             <br>
             </div>
             {% raw %}
@@ -83,15 +30,14 @@
 
             <script id="picture-template" type="x-tmpl-mustache">
             {% raw %}
-            <img class="img-responsive image-center" src="{{ image }}">
+            <img class="img-responsive image-center user-pic" src="{{ image }}">
             {% endraw %}
             </script>
             
             <script id="delete-picture-template" type="x-tmpl-mustache">
             {% raw %}
-            <br>
             <form id="delete-picture-form">
-                <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer userInfo">
+                <button type="submit" class="btn btn-danger btn-sm btn-block top-buffer delete-pic">
                     Delete this picture
                 </button>
             </form>
@@ -104,121 +50,169 @@
             <div id="upload-picture"></div>
             <div id="delete-picture"></div>
             {% endblock %}
-            <!-- <div class="col-sm-4 col-sm-offset-3"> -->
-                {% block becomehost %}
-                <button type="button" class="btn btn-primary btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal" style="margin-top: 4px;">
-                    Become a host
-                </button>
-                {% endblock %}
-                {% block account %} 
-                <button id="account-modal-btn" type="button" class="btn btn-default btn-sm btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
-                    <i class="fa fa-cog fa-fw"></i>
-                    Account
-                </button>
-                {% endblock %}
-            <!-- </div> -->
+		</div>
+		<div class="col-sm-2">
+			{% block first %}
+            <button type="button" class="btn btn-primary btn btn-block top-buffer userInfo" data-toggle="modal" data-target="#hostApplicationModal">
+                Become a host
+            </button>
+            {% endblock %}
+		</div>
+		<div class="col-sm-2">
+			{% block second %} 
+            <button id="account-modal-btn" type="button" class="btn btn-default btn btn-block top-buffer userInfo" data-toggle="modal" data-target="#account-modal">
+                <i class="fa fa-cog fa-fw"></i>
+                Account
+            </button>
+            {% endblock %}
+		</div>
+        <div class="col-sm-2">
+            {% block third %}
+            {% endblock %}
         </div>
-
-        <!-- Upcoming Lounges -->
-        <div class="col-sm-4 up-lounges">
-            <div class="panel panel-default user-lounge-display">
-                <div class="panel-heading">
-                    <h4 class="text-subtitle">
-                        {% block your_upcoming_lounges %}
-                        Your
-                        {% endblock %}
-                        Upcoming Lounges
-                        {% block register_lounge %}
-                        {% endblock %}
-                    </h4>
-                </div>
-            <div id="upcomingUserLounges"> </div>
-            <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
-                {% raw %}
-                {{#items}}
-                    <div class="list-group-item"> 
-                        <strong>
-                            <small>
-                                {{ lounge.dateTime }} 
-                                at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
-                            </small>
-                        </strong>
-                    </div>
-                {{/items}}
-                {{^items.length}}
-                    <div class="list-group-item">
-                        <strong>
-                            Nothing here yet.
-                        </strong>
-                    </div>
-                {{/items.length}}
-                {% endraw %}
-            </script>
+	</div>
+	<div class="row sign-up">
+		<div class="col-sm-4 col-sm-offset-4">
+			 <!-- Sign Up for a TL Button -->
+            <div class="text-center sign-up-button">
+                <button type="#" class="btn btn-lg btn-default register-button" style="
+                color: #2196f3;
+                ">Sign Up for a Thought Lounge</button>
             </div>
+		</div>
+        <div class="col-sm-4">
+            {% block hostSign %}
+            {% endblock %}
         </div>
-
-    </div>
-
-    <!-- User Bio -->
-    <div class="row user-bio">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <script id="welcomeMessageTemplate" type="x-tmpl-mustache">
-                {% raw %}
-                <h4>
-                    Who is
-                    <span class="header-primary">{{ firstName }}</span>? 
-                </h4>
-                {% endraw %}
-                </script>
-                <div class="text-center"id="welcomeMessage">
-                </div>
-            </div>
-            <div class="panel-body bio-panel">
-                <ul class="list-group bio-list-group">
-                  <li class="list-group-item left-align">
-                    Brief introduction!
+	</div>
+	<div class="row upcoming">
+		<div class="col-sm-4 user-bio">
+			<div class="panel panel-default">
+	            <div class="panel-heading text-center">
+                    <h5>
+                    About me 
                     {% block edit_bio %}
                     <small>
-                        <a id="editBio" href="#">edit</a>
+                        <a id="editBio" href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </small>
                     {% endblock %} 
+                    </h5>
+	            </div>
+	            <div class="panel-body left-align">
                     <script id="bioTemplate" type="x-tmpl-mustache">
                     {% raw %}
-                        {{#bio}}
+                        <h5>{{#bio}}
                             {{ . }}
                             <br>
-                        {{/bio}}
+                        {{/bio}}</h5>
                     {% endraw %}
                     </script>
                     <script id="bioEditTemplate" type="x-tmpl-mustache">
                     {% raw %}
                         <div>
                         <form id="saveEditBioForm" class="horizontal-form-element">
-                            <textarea id="editBioText" rows="3" cols="110">{{ bio }}</textarea>
+                            <textarea id="editBioText" rows="3" cols="40">{{ bio }}</textarea>
                             <br>
-                            <div style="float: left;"
+                            <div style="float: left;">
                             <button type="submit" class="btn btn-success btn-sm">Save</button>
+                        </form>
+                        <form id="cancelEditBioForm" class="horizontal-form-element cancelButton" style="float: right;">
+                            <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
                         </form>
                         </div>
                     {% endraw %}
                     </script>
                     <div id="bio"></div>
-                  </li>
-                  <li class="list-group-item">
-                    What is your story?
-                  </li>
-                  <li class="list-group-item left-align">
-                    What might we talk about?
-                  </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-        
-        <div class="col-sm-5">
+	            </div>
+	        </div>
             {% block admin %}
             {% endblock %}
+            {% block admin_accounts %}
+            {% endblock %}
+		</div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="up-lounges">
+                    {% block host %}
+                    {% endblock %}
+                    <!-- Upcoming Lounges -->
+                    <div class="panel panel-default user-lounge-display">
+                        <div class="panel-heading">
+                            <h4 class="text-subtitle">
+                                {% block your_upcoming_lounges %}
+                                Your
+                                {% endblock %}
+                                Upcoming Lounges
+                                {% block register_lounge %}
+                                {% endblock %}
+                            </h4>
+                        </div>
+                    <div id="upcomingUserLounges"> </div>
+                        <script id="upcomingUserLoungesTemplate" type="x-tmpl-mustache">
+                            {% raw %}
+                            {{#items}}
+                                <div class="list-group-item"> 
+                                    <strong>
+                                        <small>
+                                            {{ lounge.dateTime }} 
+                                            at {{ lounge.location }}{{^ lounge.location }} a place that is to be determined {{/ lounge.location }}
+                                        </small>
+                                    </strong>
+                                </div>
+                            {{/items}}
+                            {{^items.length}}
+                                <div class="list-group-item">
+                                    <strong>
+                                        Nothing here yet.
+                                    </strong>
+                                </div>
+                            {{/items.length}}
+                            {% endraw %}
+                        </script>
+                    </div>
+                </div>
+                <div class="prev-lounges previous">
+                    <div class="panel panel-default user-lounge-display">
+                        <div class="panel-heading">
+                            <h4 class="text-subtitle"> 
+                                {% block your_previous_lounges %}
+                                Your
+                                {% endblock %}
+                                Previous Lounges
+                            </h4>
+                        </div>
+                    <script id="userLoungesTemplate" type="x-tmpl-mustache">
+                    {% raw %}
+                    {{#items}}
+                        <a class="list-group-item" href="{{ lounge.web.href }}">
+                            <strong>
+                                <small>
+                                    {{ lounge.dateTime }}
+                                </small>
+                            </strong>
+                            <br>
+                            <strong>
+                                {{ topic }}
+                            </strong>
+                            <br>
+                            <small>
+                                {{ summary }}
+                            </small>
+                        </a>
+                    {{/items}}
+                    {{^items.length}}
+                        <a class="list-group-item" href="#">
+                            <strong>
+                                Nothing here yet.
+                            </strong>
+                        </a>
+                    {{/items.length}}
+                    {% endraw %}
+                    </script>
+                    <div id="userLounges"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
