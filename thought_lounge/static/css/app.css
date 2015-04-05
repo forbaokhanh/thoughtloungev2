@@ -20,8 +20,14 @@
 .btn-tumblr{color:#fff;background-color:#2c4762;border-color:rgba(0,0,0,0.2)}.btn-tumblr:hover,.btn-tumblr:focus,.btn-tumblr:active,.btn-tumblr.active,.open .dropdown-toggle.btn-tumblr{color:#fff;background-color:#1f3346;border-color:rgba(0,0,0,0.2)}
 .btn-tumblr:active,.btn-tumblr.active,.open .dropdown-toggle.btn-tumblr{background-image:none}
 .btn-tumblr.disabled,.btn-tumblr[disabled],fieldset[disabled] .btn-tumblr,.btn-tumblr.disabled:hover,.btn-tumblr[disabled]:hover,fieldset[disabled] .btn-tumblr:hover,.btn-tumblr.disabled:focus,.btn-tumblr[disabled]:focus,fieldset[disabled] .btn-tumblr:focus,.btn-tumblr.disabled:active,.btn-tumblr[disabled]:active,fieldset[disabled] .btn-tumblr:active,.btn-tumblr.disabled.active,.btn-tumblr[disabled].active,fieldset[disabled] .btn-tumblr.active{background-color:#2c4762;border-color:rgba(0,0,0,0.2)}
+html {
+  width: 100%;
+  height: 100%;
+}
 body{
   font-family: Raleway;
+    width: 100%;
+  height: 100%;
 }
 
 .quote {
@@ -104,7 +110,10 @@ body{
 }
 
 textarea {
-border-width: 2px;
+  border-style: dashed;
+  border-width: 2px;
+  width: 100%;
+  height: 100%;
 }
 .register-button {
   padding: 1.3em 2.3em;
@@ -124,56 +133,3 @@ border-radius: 3px;
 margin-right: -25px;
 }
 
-#headerblock{
-  height: 756px;
-  background-color: #cccccc;
-}
-
-#instr{
-  margin-top:60px;
-}
-
-#infoblock{
-  background-color: white;
-}
-
-#videoblock{
-  background-color: blue;
-}
-
-#video{
-  margin-top:40px;
-}
-
-#hostsblock{
-background-color: yellow;
-height: 580px;
-}
-#hosttxt{
-  padding-top: 16px;
-}
-
-#policyblock{
-background-color: purple;
-height: 820px;
-}
-#policyname{
-  padding-top:20px;
-}
-#attendblock{
-background-color: orange;
-height: 500px;
-}
-#contactblock{
-  height:200px;
-  background-color: white;
-}
-#contact{
-  text-align: center;
-}
-#contactname{
-  padding-top:20px;
-}
-.jumbotron {
-  text-align: center;
-}
