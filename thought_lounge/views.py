@@ -14,6 +14,11 @@ from marshmallow import ValidationError
 from io import StringIO
 import os, re, nose, sys, datetime, random
 
+
+def getDB(model, **kwargs):
+    return model.query.filter_by(**kwargs).first()
+
+
 @app.before_request
 def preload_user():
     g.user = None
@@ -30,11 +35,14 @@ def user():
     if not g.user:
         flask_abort(401)
     elif g.user.role == 'lounger':
-        return render_template('user_new.html')
+        image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
+        return render_template('user_new.html', image_id = g.user.picture_id, image_url = image_url)
     elif g.user.role == 'host':
-        return render_template('host_new.html')
+        image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
+        return render_template('host_new.html', image_id = g.user.picture_id, image_url = image_url)
     elif g.user.role == 'admin':
-        return render_template('admin_new.html')
+        image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
+        return render_template('admin_new.html', image_id = g.user.picture_id, image_url = image_url)
 
 
 @app.route('/user/<int:host_id>/')
@@ -344,6 +352,7 @@ class UserSignInAPI(Resource):
         sign_in_data = load_payload(UserSignInSchema, request.get_json())
 
         user = get_or_404(User, email = sign_in_data['email'])
+        print(user)
         if not user.verify_password(sign_in_data['password']):
             abort(403, message = 'Incorrect password.')
 
