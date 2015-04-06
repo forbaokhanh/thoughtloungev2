@@ -3,6 +3,8 @@ database/
 thought_lounge/private_config.py
 thought_lounge/static/pictures/
 
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

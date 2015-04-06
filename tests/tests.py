@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../thought_lounge')
 from thought_lounge import app
 from thought_lounge.models import *
 from samples import *
