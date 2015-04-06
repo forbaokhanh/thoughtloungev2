@@ -1,10 +1,25 @@
-{{ user.first_name }},
-Congratulations! You're now a Thought Lounger. We're excited to meet you and hear your ideas.
+Hey {{ user.firstName }}! I'm stoked you signed up for Thought Lounge! Hopefully you're already coming to one or will come to one soon, you'll see why it's so awesome when you come. I listed the next couple below. 
+ 
+[upcoming week's thought lounges with dates, times, and hosts, and they're linked such that they will sign up for one when they click it]
 
-You can register for your first lounge at our website, http://www.thoughtlounge.org. If you have any questions, feel free to reply back to this email.
+I wanted to reiterate really quick what it's about again (although you already might have a pretty good idea).
 
-Still unsure? You can watch our video at https://www.youtube.com/watch?v=YupKK-UTeLk or read our past lounges at http://www.thoughtlounge.org/log/. Happy lounging!
+The biggest scheme about TL is that it's anything more than the ultimate cocktail party. It's really just an excuse to have a no-strings attached conversation with the girl with rainbow socks strutting by you on campus, the guy solving equations next to you on the bus, or even a friend or professor, about the things you're all actually interested in. 
 
-Regards,
-Thought Lounge
-http://www.thoughtlounge.org
+Thought lounge is a formatted dialogue with a few people (4-6) pulled together by an awesome host (they could be total strangers or your closest friends). Each person brings the topic of utmost interest to them and that they think most needs to be talked about, and have 12 minutes to facilitate a dialogue/present on it. Then at the end all the topics are written up on the board and connected. All this stuff and more can be found on the TL Manifisto[link to manifesto on site] on the site[link to front page of site to the part where they sign up for a TL].
+
+What's Thought Lounge about?
+	Doing something scary. Public speaking, meeting new people, and thinking about what really matters to us is scary and hard! But it's in a "safe space"[link to TL Policy for Dialogue] and every time I do it I feel fuzzy and relaxed inside during and afterward. And it's way more informal than you think!
+	Sharing stories and what's in our hearts. Name, major, where are you from? Cut the crap. What from infinity to beyond makes you stoked? Telling stories makes it strangely obvious how much we share with strangers.
+	Innovating "crazily" across fields. When forced to connect recursion with pandas, surfboard shaping, and feminine appearance, that's when really innovative ideas in a field come up.
+
+What isn't thought lounge about?
+	Flaking. I mean, you can flake, but just do it sooner rather than later. Signing up holds the spot for you, and it also holds the spot from others!
+
+So basically, Thought Lounge is about cutting the crap and getting to talk about what's in your heart. It's about making strangers less strange and getting tangential perspectives on your own topic of interest. It's about fostering dialogue and keeping love of learning fresh. It's a good thing! And it just so happens it has a lot of other awesome side effects [Link to manifesto]. If you have ANY questions you can (and absolutely should) respond to this note! Also you can check out the site thoughtlounge.org. It's got some cool stuff on it like a TL Manifesto.
+
+Good thinking always :)
+Axel (a host for TL)
+and the rest of the TL Team
+
+p.s. what's the best way for me to keep you updated for the next thought lounges that are happening? weekly/bimonthly/monthly email [link to changing that on their profile]? fb? you'll just check the site? a mix? Pony express? Let me know, we'll do it that way. You can also always change the settings on your profile on the site.

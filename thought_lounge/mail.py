@@ -9,6 +9,7 @@ from sqlalchemy import and_
 import datetime, subprocess
 
 def send_welcome_mail(user):
+    lounges = Lounge.query.filter(Lounge.date_time > now).all()
     message = Message("Welcome to Thought Lounge!", recipients = [user.email])
     message.body = render_template('welcome.mail', user = user)
     if not app.config['TESTING']:

@@ -30,11 +30,12 @@ def user():
     if not g.user:
         flask_abort(401)
     elif g.user.role == 'lounger':
-        return render_template('user.html')
+        return render_template('user_new.html')
     elif g.user.role == 'host':
-        return render_template('host.html')
+        return render_template('host_new.html')
     elif g.user.role == 'admin':
-        return render_template('admin.html')
+        return render_template('admin_new.html')
+
 
 @app.route('/user/<int:host_id>/')
 def host_preview(host_id):
@@ -81,11 +82,11 @@ def not_authorized(e):
 def not_found(e):
     return render_template('404.html'), 404
 
-@app.errorhandler(500)
-def internal_server_error(e):
-    # Doesn't work.
-    send_error_mail()
-    return render_template('500.html'), 500
+# @app.errorhandler(500)
+# def internal_server_error(e):
+#     # Doesn't work.
+#     send_error_mail()
+#     return render_template('500.html'), 500
 
 ###########################
 ####### RESTful API #######
@@ -234,139 +235,6 @@ def put(model, data):
 def validate_role(role):
     if role not in ['lounger', 'host', 'admin']:
         raise ValidationError('role attribute must be either \'lounger\', \'host\', or \'admin\'.')
-
-# class UserPictureSchema(ma.Schema):
-#     #href = ma.URLFor('picture_ep', picture_id = '<id>')
-#     #id = ma.String('picture_ep', picture_id = '<id>')
-#     image = ma.URLFor('picture_image_ep', picture_id = '<id>')
-
-# class UserHostApplicationSchema(ma.Schema):
-#     application = ma.String(required = True)
-#     isApproved = ma.Boolean(attribute = 'is_approved')
-
-# class LinkedUserHostApplicationSchema(UserHostApplicationSchema):
-#     href = ma.URLFor('user_host_application_ep', host_application_id = '<id>', user_id = '<user.id>')
-
-# class UserHostApplicationListSchema(ma.Schema):
-#     items = ma.Nested(LinkedUserHostApplicationSchema, many = True, attribute = 'user_host_applications')
-#     href = ma.URLFor('user_host_applications_ep', user_id = '<user_id>')
-
-# class UserSchema(ma.Schema):
-#     email = ma.Email(required = True)
-#     firstName = ma.String(attribute = 'first_name', required = True)
-#     lastName = ma.String(attribute = 'last_name')
-#     bio = ma.String()
-#     notifications = ma.Integer(required = True)
-#     picture = ma.Nested(UserPictureSchema, default = dict())
-#     role = ma.String()
-#     hostApplications = ma.Nested(UserHostApplicationSchema, default = dict())
-#     userLounges = ma.Nested(LinkedLoungeSchema, default=dict())
-
-# class PasswordedUserSchema(UserSchema):
-#     password = ma.String(required = True)
-
-# class RoledUserSchema(UserSchema):
-#     role = ma.String(validate = validate_role)
-
-# class LinkedUserSchema(RoledUserSchema):
-#     href = ma.URLFor('user_ep', user_id = '<id>')
-#     key = ma.Hyperlinks({
-#         'href': ma.URLFor('key_ep', user_id = '<id>')
-#     })
-#     userLounges = ma.Hyperlinks({
-#         'href': ma.URLFor('user_lounges_ep', user_id = '<id>')
-#     })
-#     hostApplications = ma.Hyperlinks({
-#         'href': ma.URLFor('user_host_applications_ep', user_id = '<id>')
-#     })
-#     web = ma.Hyperlinks({
-#         'href': ma.URLFor('host_preview', host_id = '<id>')
-#     })
-#     # class Meta:
-#     #     fields = ('bio', 'email', 'firstName', 'lastName', 'role', 'notifications', 'picture')
-
-# class UserListSchema(ma.Schema):
-#     items = ma.Nested(UserSchema, many = True, attribute = 'users')
-#     href = ma.URLFor('users_ep')
-
-# class LoungePictureSchema(ma.Schema):
-#     picture = ma.Nested(PictureSchema, allow_null = True, default = dict(), required = True)
-
-# class LinkedLoungePictureSchema(LoungePictureSchema):
-#     href = ma.URLFor('lounge_picture_ep', picture_id = '<id>', lounge_id = '<lounge_id>')
-
-# class LoungePictureListSchema(ma.Schema):
-#     items = ma.Nested(LinkedLoungePictureSchema, many = True, attribute = 'lounge_pictures')
-#     href = ma.URLFor('lounge_pictures_ep', lounge_id = '<lounge_id>')
-
-# class UserSignInSchema(ma.Schema):
-#     email = ma.String(required = True)
-#     password = ma.String(required = True)
-
-# class KeySchema(ma.Schema):
-#     key = ma.String(required = True)
-#     href = ma.URLFor('key_ep', user_id = '<user.id>')
-
-# class PictureSchema(ma.Schema):
-#     # href = ma.URLFor('picture_ep', picture_id = '<id>')
-#     image = ma.URLFor('picture_image_ep', picture_id = '<id>')
-#     #image = ma.String('picture_image_ep', picture_id='<id>')
-
-# class PictureListSchema(ma.Schema):
-#     items = ma.Nested(PictureSchema, many = True, attribute = 'pictures')
-#     href = ma.URLFor('pictures_ep')
-
-# class LoungeSchema(ma.Schema):
-#     dateTime = ma.DateTime(attribute = 'date_time', required = True)
-#     location = ma.String()
-#     campus = ma.String()
-#     isReserved = ma.Boolean(attribute = 'is_reserved', required = True)
-#     topic = ma.String()
-#     summary = ma.String()
-#     loungeUsers = ma.Nested()
-
-# class LinkedLoungeSchema(LoungeSchema):
-#     href = ma.URLFor('lounge_ep', lounge_id = '<id>')
-#     loungeUsers = ma.Hyperlinks({
-#         'href': ma.URLFor('lounge_users_ep', lounge_id = '<id>')
-#     })
-#     pictures = ma.Hyperlinks({
-#         'href': ma.URLFor('lounge_pictures_ep', lounge_id = '<id>')
-#     })
-#     web = ma.Hyperlinks({
-#         'href': ma.URLFor('log', lounge_id = '<id>')
-#     })
-
-# class LoungeListSchema(ma.Schema):
-#     items = ma.Nested(LinkedLoungeSchema, many = True, attribute = 'lounges')
-#     href = ma.URLFor('lounges_ep')
-
-# class UserLoungeBaseSchema(ma.Schema):
-#     topic = ma.String()
-#     summary = ma.String()
-#     showedUp = ma.Boolean(attribute = 'showed_up')
-#     isHost = ma.Boolean(attribute = 'is_host', required = True)
-
-# class UserLoungeSchema(UserLoungeBaseSchema):
-#     lounge = ma.Hyperlinks({
-#         'href': ma.URLFor('lounge_ep', lounge_id = '<lounge_id>')
-#     }, required = True)
-
-# class LinkedUserLoungeSchema(UserLoungeSchema):
-#     href = ma.URLFor('user_lounge_ep', user_id = '<user_id>', lounge_id = '<lounge_id>')
-
-# class UserLoungeListSchema(ma.Schema):
-#     items = ma.Nested(LinkedUserLoungeSchema, many = True, attribute = 'user_lounges')
-#     href = ma.URLFor('user_lounges_ep', user_id = '<user_id>')
-
-# ### Expanded Schemas ###
-# # (sometimes reference later schemas)
-# # How to expand a list?
-# class LinkedLoungeUserSchemaExpanded(LinkedLoungeUserSchema):
-#     user = ma.Nested(LinkedUserSchema)
-
-# class LoungeUserListSchemaExpanded(LoungeUserListSchema):
-#     items = ma.Nested(LinkedLoungeUserSchemaExpanded, many = True, attribute = 'lounge_users')
 
 row2dict = lambda row: dict((col, getattr(row, col)) for col in row.__table__.columns.keys())
 
@@ -856,7 +724,6 @@ class LoungeUserAPI(Resource):
 class LoungeUserListAPI(Resource):
     def get(self, lounge_id):
         lounge = get_or_404(Lounge, id = lounge_id)
-        print('nigga nigganiga nigai nigangai')
 
         type = request.args.get('type')
         expand = request.args.get('expand')
