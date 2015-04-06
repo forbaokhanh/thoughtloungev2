@@ -14,8 +14,11 @@
 <div id="scroll-div_wrapper">
 	<div id="available_tls">
 		<p>When are you coming?</p>
-		<p>Quo et partem adipisci tincidunt. Magna aperiri est an, ea has solet decore. An vel omnesque imperdiet. Mel ut commune prodesset, semper aperiri labores te usu. Liber vituperata efficiantur et mel.</p>
-		<p>Lorem ipsum dolor sit amet, ei per doming lobortis adversarium. Ut quis dicunt eam, nam legere audire no. Ex per exerci pertinax forensibus, est soluta vituperatoribus at. Ad vim tantas ridens disputando, mei detracto persecuti te, et has erat saepe eligendi.</p>
+		<ul>
+		{% for lounge in lounges %}
+		<li>{{lounge.topic}}</li>
+		{% endfor %}
+		</ul>
 	</div>
 	<div id="newsfeed">
 		<p>News feed.</p>

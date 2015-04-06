@@ -28,7 +28,8 @@ def preload_user():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    lounges = Lounge.query.order_by(desc(Lounge.date_time)).all()
+    return render_template('home.html', lounges = [lounge for lounge in lounges if lounge.date_time > datetime.datetime.today()])
 
 @app.route('/user/')
 def user():
