@@ -124,7 +124,7 @@ function userToUserLounges(user, params) {
     params = params || '';
     return $.ajax({
         type: 'GET',
-        url: user.userLounges.href,
+        url: "/api/users/" + user.id + "/lounges/",
         data: $.param(params) 
     });
 }
@@ -192,9 +192,10 @@ function loungeToPictures(lounge) {
 
 function getAuthentication(user) {
     var authentication;
+    console.log("/api/users/" + user.id + "/key/");
     $.ajax({
         type: 'GET',
-        url: user.key.href,
+        url: "/api/users/" + user.id + "/key/",  // WHEN TRYING TO UPDATE A BIOGRAPHY, THIS LINE ERRORS. CANNOT READ PROPERTY OF UNDEFINED
         async: false
     }).done(function(key, textStatus, jqXHR) {
         authentication = {

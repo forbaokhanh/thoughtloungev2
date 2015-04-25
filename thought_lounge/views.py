@@ -37,13 +37,13 @@ def user():
         flask_abort(401)
     elif g.user.role == 'lounger':
         image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
-        return render_template('user_new.html', image_id = g.user.picture_id, image_url = image_url)
+        return render_template('user_new.html', image_id = g.user.picture_id, image_url = image_url, user_bio = g.user.bio)
     elif g.user.role == 'host':
         image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
-        return render_template('host_new.html', image_id = g.user.picture_id, image_url = image_url)
+        return render_template('host_new.html', image_id = g.user.picture_id, image_url = image_url, user_bio = g.user.bio)
     elif g.user.role == 'admin':
         image_url = '/api/pictures/cdn/' + str(g.user.picture_id)
-        return render_template('admin_new.html', image_id = g.user.picture_id, image_url = image_url)
+        return render_template('admin_new.html', image_id = g.user.picture_id, image_url = image_url, user_bio = g.user.bio)
 
 
 @app.route('/user/<int:host_id>/')

@@ -7,10 +7,11 @@ $(document).ready(refreshUser);
 function refreshUser() {
     getCurrentUser().then(function(user) {
         globals.currentUser = user;
+        console.log(globals.currentUser.id);
         if (globals.currentUser) {
             $.ajax({
                 type: 'GET',
-                url: user.userLounges.href, 
+                url: "/api/users/" + user.id + "/lounges/", // MY CONSOLE SAYS THERE'S A PROBLEM HERE
                 async: false,
                 data: $.param({time: 'past'})
             }).then(function(userLounges) {

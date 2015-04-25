@@ -30,7 +30,6 @@
 
             <script id="picture-template" type="x-tmpl-mustache">
             {% raw %}
-            TESTIAENGIASF IAFA
             {{image_url}}
             <img class="img-responsive image-center user-pic" src={{ image_url|safe }}>
             {% endraw %}
@@ -101,14 +100,7 @@
                     </h5>
 	            </div>
 	            <div class="panel-body left-align">
-                    <script id="bioTemplate" type="x-tmpl-mustache">
-                    {% raw %}
-                        <h5>{{#bio}}
-                            {{ . }}
-                            <br>
-                        {{/bio}}</h5>
-                    {% endraw %}
-                    </script>
+                    <h5> {{ user_bio }} </h5>
                     <script id="bioEditTemplate" type="x-tmpl-mustache">
                     {% raw %}
                         <div>

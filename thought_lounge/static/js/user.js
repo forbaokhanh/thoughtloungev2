@@ -29,10 +29,8 @@ function loadWelcomeMessage() {
 }
 
 function loadBio() {
-    console.log('loading bio');
     var user = loadUserOrPreview();
     user.originalBio = user.bio;
-    console.log(user.originalBio);
     user.bio = user.originalBio.split('\n');
     var template = $('#bioTemplate').html();
     var rendered = Mustache.render(template, user);
@@ -49,7 +47,7 @@ function loadPicture() {
     }
     
     // Hide when reload picture after submitting picture
-    if (!user.picture.href) {
+    if (!user.picture) {
         var template = $('#upload-picture-template').html()
         var rendered = Mustache.render(template)
         $('#upload-picture').html(rendered);
@@ -88,7 +86,7 @@ function loadUserLounges() {
 
     $.ajax({
         type: 'GET',
-        url: user.userLounges.href,
+        url: "/api/users/" + user.id + "/lounges/",
         data: 'time=past' 
     }).done(function(userLounges, textStatus, jqXHR) {
         var userLoungeCalls = [];
@@ -129,7 +127,7 @@ function loadUpcomingUserLounges() {
 
     $.ajax({
         type: 'GET',
-        url: user.userLounges.href,
+        url: "/api/users/" + user.id + "/lounges/",
         data: 'time=future'
     }).done(function(userLounges, textStatus, jqXHR) {
         var userLoungeCalls = [];
@@ -247,7 +245,7 @@ $('#bio').on('submit', '#saveEditBioForm', function(event) {
     }
 
     event.preventDefault();
-
+    console.log("Trying to update the bio.");
     var user = loadUserOrPreview();
     user.bio = $('#editBioText').val()
 
