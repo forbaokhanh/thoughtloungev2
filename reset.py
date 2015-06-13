@@ -34,19 +34,19 @@ for picture in pictures:
     #print(resp)
     picture_reps.append(resp)
 
-# for picture_data in pictures:
-#     rv = requests.get(picture_data['href'])
-#     resp = rv.json()
-#     #print(resp)
-#     picture_href = resp['results'][0]['user']['picture']['medium']
-#     rv = requests.get(picture_href)
-#     resp = rv.content
-#     print(resp)
-#     rv = requests.post(prefix + '/api/pictures/', files = {'file': ('picture.jpg', resp)})
-#     resp = rv.json()
-#     #print(resp)
-#     picture_reps.append(resp)
-#print(picture_reps)
+for picture_data in pictures:
+    rv = requests.get(picture_data['href'])
+    resp = rv.json()
+    #print(resp)
+    picture_href = resp['results'][0]['user']['picture']['medium']
+    rv = requests.get(picture_href)
+    resp = rv.content
+    print(resp)
+    rv = requests.post(prefix + '/api/pictures/', files = {'file': ('picture.jpg', resp)})
+    resp = rv.json()
+    #print(resp)
+    picture_reps.append(resp)
+print(picture_reps)
 
 user_reps = []
 for index, user_data in enumerate(users):

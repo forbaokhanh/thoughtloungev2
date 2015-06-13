@@ -91,7 +91,7 @@ function loadUserLounges() {
     }).done(function(userLounges, textStatus, jqXHR) {
         var userLoungeCalls = [];
        
-        $.each(userLounges.items, function(index, userLounge) {
+        $.each(userLounges.items, function(index, userLounge) { //What are userLounges?
             // Populating the host attribute with the actual user info 
             userLoungeCalls.push(
                 $.ajax({
@@ -249,9 +249,10 @@ $('#bio').on('submit', '#saveEditBioForm', function(event) {
     var user = loadUserOrPreview();
     user.bio = $('#editBioText').val()
 
+    console.log("/api/users/" + user.id + "/");
     $.ajax({
         type: 'PUT',
-        url: user.href,
+        url: "/api/users/" + user.id + "/",
         data: JSON.stringify(user),
         headers: getAuthentication(user),
         contentType: 'application/json'

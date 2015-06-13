@@ -91,12 +91,6 @@ def not_authorized(e):
 def not_found(e):
     return render_template('404.html'), 404
 
-# @app.errorhandler(500)
-# def internal_server_error(e):
-#     # Doesn't work.
-#     send_error_mail()
-#     return render_template('500.html'), 500
-
 ###########################
 ####### RESTful API #######
 ###########################
@@ -643,7 +637,8 @@ class UserLoungeListAPI(Resource):
         tmp = [row2dict(user_lounge) for user_lounge in user_lounges]
 
         for dictionary in tmp:
-            dictionary['lounge']['date_time'] = str(dictionary['date_time'])
+            lounge = row2dict(get_or_404(Lounge, id = dictionary['lounge_id']))
+            dictionary['date_time'] = str(lounge['date_time'])
             dictionary['user_id'] = user_id
 
         user_lounges = {
