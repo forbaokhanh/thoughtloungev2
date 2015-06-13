@@ -7,7 +7,6 @@ $(document).ready(refreshUser);
 function refreshUser() {
     getCurrentUser().then(function(user) {
         globals.currentUser = user;
-        console.log(globals.currentUser.id);
         if (globals.currentUser) {
             $.ajax({
                 type: 'GET',
@@ -45,7 +44,6 @@ $('#signInForm').submit(function(event) {
 		return;
 	}
 
-    $.ajax({
         type: 'POST',
         url: '/api/auth/sign_in/',
         data: $('#signInForm').serializeJSON(),
@@ -84,8 +82,9 @@ $('#signOutForm').submit(function(event) {
     });
 });
 
-$('#signUpForm').submit(function(event) {
-    event.preventDefault();
+$('#signUpForm').submit(function(e) {
+    e.preventDefault();
+    console.log("Clicking a sign up button");
 
 	function userRegisterConflictError() {
 		$('#signUpError').html(error('This email is already registered. Please choose a different email.'));
@@ -114,4 +113,8 @@ $('#signUpForm').submit(function(event) {
 			userRegisterError();
 		}
 	})
-})
+});
+
+function hello() {
+    console.log("Hello");
+}

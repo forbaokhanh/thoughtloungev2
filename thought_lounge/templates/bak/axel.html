@@ -20,7 +20,7 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtlmodal"> Host a Thought Lounge</button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="addtlmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    {% block modals %}
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -63,7 +63,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    {% endblock %}
                     </div>
                 </div>
                 <div class="col-md-9">
