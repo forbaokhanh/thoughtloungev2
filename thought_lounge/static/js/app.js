@@ -28,6 +28,7 @@ function refreshUser() {
 
 $('#signInForm').submit(function(event) {
     event.preventDefault();
+    console.log("Signing a user in");
 	
     function userSignInAuthError() {
 		$('#sign-in-error').html(error('You supplied an incorrect password. Try again.'));
@@ -43,7 +44,7 @@ $('#signInForm').submit(function(event) {
 		$('#sign-in-error').html(error('We couldn\'t sign you in. Please refresh the page to try again.'));
 		return;
 	}
-
+    $.ajax({
         type: 'POST',
         url: '/api/auth/sign_in/',
         data: $('#signInForm').serializeJSON(),
@@ -84,7 +85,6 @@ $('#signOutForm').submit(function(event) {
 
 $('#signUpForm').submit(function(e) {
     e.preventDefault();
-    console.log("Clicking a sign up button");
 
 	function userRegisterConflictError() {
 		$('#signUpError').html(error('This email is already registered. Please choose a different email.'));
@@ -97,13 +97,14 @@ $('#signUpForm').submit(function(e) {
 	}
 
     var data = $('#signUpForm').serializeObject();
-    data.notifications = 2;
+    // data.notifications = 2;
 	$.ajax({
 		type: 'POST',
 		url: '/api/users/',
 		data: JSON.stringify(data),
 		contentType: 'application/json'
 	}).done(function(user, textStatus, jqXHR) {
+        console.log("Your User was successfully posted");
         window.location.replace('/user/');
 	}).fail(function(error, textStatus, jqXHR){
 		if (error.status == 409){
@@ -112,7 +113,7 @@ $('#signUpForm').submit(function(e) {
 		else {
 			userRegisterError();
 		}
-	})
+	});
 });
 
 function hello() {

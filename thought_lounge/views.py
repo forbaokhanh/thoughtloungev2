@@ -305,20 +305,23 @@ class UserListAPI(Resource):
         #return UserListSchema().dump(users).data
 
     def post(self):
-        #user_data = load_payload(PasswordedUserSchema, request.get_json())
         user_data = request.get_json()
         print(user_data)
-        user = User(email = user_data['email'], password = user_data['password'], bio = user_data['bio'], notifications = user_data['notifications'], first_name = user_data['firstName'], last_name = user_data['lastName'])
+
+        # <======!!!THIS LINE REQUIRES A LOT OF DATA FROM THE SIGN UP FORM. DO WE REALLY NEED IT?!!!=====>
+        # user = User(email = user_data['email'], password = user_data['password'], bio = user_data['bio'], notifications = user_data['notifications'], first_name = user_data['firstName'], last_name = user_data['lastName'])
+
+        # <======!!!THIS LINE SHRUNK PICTURE, NOTIFICATIONS AND BIO !!!=====>
+        user = User(email = user_data['email'], password = user_data['password'], first_name = user_data['firstName'], last_name = user_data['lastName'])
         none_or_409(User, 'DUPLICATE_EMAIL', email = user.email)
-        user.picture = get_or_404(Picture, id = user_data['picture'])
+
+
+        # <======!!! THIS IS VERY POSSIBLY REDUNDANT, SINCE YOU'RE NEVER GOING TO LINK THEM TO A PICTURE RIGHT AWAY!!!=====>
+        if user_data['picture'] :
+            user.picture = get_or_404(Picture, id = user_data['picture'])
+        else :
+            user.picture = get_or_404(Picture, id = 1)
         picture_data = user_data.pop('picture', None)
-
-
-        # if picture_data is not None:
-        #     #mapping = url_map('picture_ep', picture_data['href'])
-        #     pass
-        # else:
-        #     user.picture = None
 
         db.session.add(user)
         db.session.commit()
