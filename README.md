@@ -1,6 +1,6 @@
 # thought-lounge 
 ## Introduction
-Thought Lounge is 'a formatted dialogue with strangers on the urgent topics of utmost interest to them, efficiently and in a "safe space."' This is the repository for http://www.thoughtlounge.org, which automates the process or signing up for and logging thought lounges.
+Thought Lounge is 'a formatted dialogue with strangers on the urgent topics of utmost interest to them, efficiently and in a "safe space."' This is the repository for http://www.thoughtlounge.org, which automates the process of signing up for and logging thought lounges.
 
 ## API
 Thought Lounge uses a RESTful API to interface with the front-end.
